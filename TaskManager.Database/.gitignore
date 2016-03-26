@@ -1,0 +1,8 @@
+bin/*
+bin/**/*
+
+obj/*
+obj/**/*
+
+CreateAll.log
+Insert/GvaExcelConfig/ExcelConfig.log

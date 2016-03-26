@@ -1,0 +1,14 @@
+packages/*
+packages/**/*
+
+
+build/*
+build/**/*
+
+node_modules/*
+node_modules/**/*
+
+*.tmp
+*.suo
+*.csproj.user
+.vs/config/**

@@ -1,0 +1,1 @@
+@sqlcmd -S. -v dbName="TaskManager" -i"CreateDb.sql"

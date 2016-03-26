@@ -1,0 +1,16 @@
+﻿Run at 03/26/2016 22:20:33
+============== STDOUT ==============
+------ Creating TaskManager
+Changed database context to 'master'.
+Create database TaskManager
+Changed database context to 'TaskManager'.
+Users
+
+(2 rows affected)
+
+
+============== STDERR ==============
+
+
+============== EXITCODE ==============
+0
