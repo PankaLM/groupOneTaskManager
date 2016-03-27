@@ -1,6 +1,6 @@
 ﻿using Microsoft.Owin.Security;
 using System.Net.Http;
-using TaskManager.Data.UserContextModels;
+using TaskManager.Common.UserContextModels;
 
 namespace TaskManager.Data.Common
 {

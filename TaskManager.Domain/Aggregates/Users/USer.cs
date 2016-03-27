@@ -3,10 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Helpers;
+using TaskManager.Domain.Aggregates.Tasks;
 
 namespace TaskManager.Domain.Aggregates.Users
 {
@@ -14,22 +12,32 @@ namespace TaskManager.Domain.Aggregates.Users
     {
         public User()
         {
+            this.Tasks = new List<TaskModel>();
+            this.UserAchievements = new List<UserAchievement>();
         }
 
-        public int UserId { get; set; }
-        public string Username { get; set; }
-        public string Fullname { get; set; }
-        public string Email { get; set; }
-        public bool IsActive { get; set; }
+        public int UserId { get; private set; }
+
+        public string Username { get; private set; }
+
+        public string Fullname { get; private set; }
+
+        public string Email { get; private set; }
+
+        public bool IsActive { get; private set; }
 
         //server only
         [JsonIgnore]
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; private set; }
         [JsonIgnore]
-        public string PasswordSalt { get; set; }
+        public string PasswordSalt { get; private set; }
 
         //client only
-        public string Password { get; set; }
+        public string Password { get; private set; }
+
+        public IList<TaskModel> Tasks { get; private set; }
+
+        public IList<UserAchievement> UserAchievements { get; private set; }
 
         public void SetPassword(string password)
         {

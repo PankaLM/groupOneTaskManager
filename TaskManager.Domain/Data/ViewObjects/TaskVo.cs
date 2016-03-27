@@ -11,5 +11,11 @@ namespace TaskManager.Domain.Data.ViewObjects
         public int TaskId { get; set; }
 
         public string Title { get; set; }
+
+        public int FlyScore { get; set; }
+
+        public DateTime? Deadline { get; set; }
+
+        public int? Duration { get; set; }
     }
 }

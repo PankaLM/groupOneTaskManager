@@ -9,6 +9,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Core.Objects.DataClasses;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -92,6 +93,22 @@ namespace TaskManager.Data.Common
                 }
 
                 this.InternalDbContext.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Console.WriteLine(
+                            "Class: {0}, Property: {1}, Error: {2}",
+                            validationErrors.Entry.Entity.GetType().FullName,
+                            validationError.PropertyName,
+                            validationError.ErrorMessage);
+                    }
+                }
+
+                throw;
             }
             catch (Exception)
             {

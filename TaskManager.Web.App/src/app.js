@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('taskManager', [
-        'ui.router'
+        'ui.router',
+        'ngResource',
     ])
     .config([
         '$stateProvider',
@@ -12,15 +13,10 @@
             .otherwise('/');
 
             $stateProvider
-            .state("home", {
-                url: "/",
-                controller: 'HomeController',
-                templateUrl: 'views/home.html'
-            })
-            .state("page", {
-                url: "/page/{pageName}",
-                controller: 'PageController',
-                templateUrl: 'views/page.html'
+            .state("tasks", {
+              url: "/",
+              controller: 'TasksCtrl',
+              templateUrl: 'tasks/views/tasksSearch.html'
             });
         }
     ]);

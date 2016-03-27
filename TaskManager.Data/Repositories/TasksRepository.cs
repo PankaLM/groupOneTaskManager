@@ -1,25 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskManager.Data.Common;
+using TaskManager.Domain.Aggregates.Tasks;
 using TaskManager.Domain.Data.Common;
 using TaskManager.Domain.Data.Repositories.Tasks;
 using TaskManager.Domain.Data.ViewObjects;
 
 namespace TaskManager.Data.Repositories
 {
-    public class TasksRepository : ITasksRepository
+    internal class TasksRepository : AggregateRepository<TaskModel>, ITasksRepository
     {
-        private IDbContextAccessor dbContextAccessor;
         public TasksRepository(IDbContextAccessor dbContextAccessor)
+            : base(dbContextAccessor)
         {
-            this.dbContextAccessor = dbContextAccessor;
+        }
+
+        public override TaskModel Find(int id)
+        {
+            return this.dbContextAccessor.DbContext.Set<TaskModel>()
+                .Include(t => t.RecurringTaskGroup)
+                .Where(t => t.TaskId == id).SingleOrDefault();
         }
 
         public IEnumerable<TaskVo> GetTasks(int userId)
         {
-            return null;//this.dbContextAccessor.DbContext.Set<Task>();
+            return this.dbContextAccessor.DbContext.Set<TaskModel>()
+                .Where(t => t.UserId == userId)
+                .OrderBy(t => t.FlyScore)
+                .Select(t => new TaskVo()
+                 {
+                     TaskId = t.TaskId,
+                     Deadline = t.Deadline,
+                     Duration = t.Duration,
+                     Title = t.Title,
+                     FlyScore = t.FlyScore
+                 });
         }
     }
 }

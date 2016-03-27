@@ -1,4 +1,4 @@
-﻿namespace TaskManager.Data.UserContextModels
+﻿namespace TaskManager.Common.UserContextModels
 {
     public class UserContext
     {

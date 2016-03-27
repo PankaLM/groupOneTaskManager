@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskManager.Domain.Aggregates.Tasks;
+using TaskManager.Domain.Data.Common;
 using TaskManager.Domain.Data.ViewObjects;
 
 namespace TaskManager.Domain.Data.Repositories.Tasks
 {
-    public interface ITasksRepository
+    public interface ITasksRepository : IAggregateRepository<TaskModel>
     {
         IEnumerable<TaskVo> GetTasks(int userId);
     }

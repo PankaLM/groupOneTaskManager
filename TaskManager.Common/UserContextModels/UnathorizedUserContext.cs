@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaskManager.Data.UserContextModels
+namespace TaskManager.Common.UserContextModels
 {
     public class UnathorizedUserContext : UserContext
     {
