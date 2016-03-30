@@ -3,6 +3,6 @@
   'use strict';
 
   angular.module('taskManager').factory('Tasks', ['$resource', function ($resource) {
-    return $resource('api/tasks/:ind');
+    return $resource('api/tasks/:id');
   }]);
 }(angular));

@@ -1,3 +1,16 @@
-<h1>{{ page }} angular </h1>
+<ng-form name="editTaskForm">
+  <div class="panel">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <button type="button" ng-click="editMode = true" class="btn btn-primary btn-xs glyphicon glyphicon-pencil" ng-show="!editMode"></button>
+        <button type="button" ng-click="remove()" class="btn btn-danger btn-xs glyphicon glyphicon-remove"></button>
+        <button type="button" ng-click="save()" class="btn btn-primary btn-xs glyphicon glyphicon-floppy-disk" ng-show="editMode"></button>
+        <button type="button" ng-click="back()" class="btn btn-primary btn-xs glyphicon glyphicon-menu-left"></button>
+      </div>
+    </div>
 
-<a ui-sref="page({pageName:'test'})"><i class="fa fa-angle-right"></i> Go to test page</a>
+    <div class="well-sm panel-body">
+      <task ng-model="task" name="taskFom" readonly="!editMode"></task>
+    </div>
+  </div>
+</ng-form>

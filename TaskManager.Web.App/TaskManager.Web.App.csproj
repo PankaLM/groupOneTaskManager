@@ -44,8 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\img\" />
+    <Folder Include="src\users\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="src\directives\task\task.html" />
+    <Content Include="src\directives\task\task.js" />
+    <Content Include="src\tasks\controllers\tasksNewCtrl.js" />
+    <Content Include="src\tasks\controllers\tasksEditCtrl.js" />
     <Content Include="src\tasks\resources\tasks.js" />
     <Content Include="src\tasks\views\tasksEdit.html" />
     <Content Include="src\tasks\views\tasksNew.html" />
@@ -55,7 +60,7 @@
     <Content Include="src\css\stylesheets.css" />
     <Content Include="src\favicon.ico" />
     <Content Include="index.html" />
-    <Content Include="src\tasks\controllers\tasksCtrl.js" />
+    <Content Include="src\tasks\controllers\tasksSearchCtrl.js" />
     <Content Include="src\tasks\views\tasksSearch.html" />
   </ItemGroup>
   <ItemGroup>

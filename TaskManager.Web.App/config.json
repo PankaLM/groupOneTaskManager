@@ -1,5 +1,5 @@
 {
-  "version":  "0.0.1",
+  "version": "0.0.1",
   "outputDir": "../TaskManager.Web.Host/App/",
   "jsDir": "js/",
   "cssDir": "css/",
@@ -10,22 +10,34 @@
     "!src/bower_components/**"
   ],
   "lib": [
+    "src/bower_components/jquery/dist/jquery.min.js",
+    "src/bower_components/jquery-ui/jquery-ui.js",
     "src/bower_components/angular/angular.min.js",
+    "src/bower_components/chosen/chosen.jquery.js",
+    "src/bower_components/angular-ui-date/dist/date.js",
+    "src/bower_components/angular-chosen-localytics/dist/angular-chosen.min.js",
     "src/bower_components/angular-ui-router/release/angular-ui-router.js",
-    "src/bower_components/angular-resource/angular-resource.js"
+    "src/bower_components/angular-resource/angular-resource.js",
+    "src/bower_components/lodash/dist/lodash.js",
+    "src/bower_components/handsontable/dist/handsontable.full.js",
+    "src/bower_components/ngHandsontable/dist/ngHandsontable.js"
   ],
   "css": [
     "src/bower_components/bootstrap/dist/css/bootstrap.css",
     "src/bower_components/font-awesome/css/font-awesome.css",
+    "src/bower_components/jquery-ui/themes/smoothness/jquery-ui.css",
+    "src/bower_components/handsontable/dist/handsontable.full.css",
     "src/css/**/*.css"
   ],
-  "fonts": [
-    "src/bower_components/bootstrap/dist/fonts/*",
-    "src/bower_components/font-awesome/fonts/*"
-  ],
-  "img": [
-    "src/img/**/*"
-  ],
+  "assets": {
+    "../fonts/": [
+      "src/bower_components/bootstrap/dist/fonts/**",
+      "src/bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2"
+    ],
+    "../images/": [
+      "src/bower_components/jquery-ui/themes/smoothness/images/**"
+    ]
+  },
   "templates": [
     "src/**/*.html"
   ]

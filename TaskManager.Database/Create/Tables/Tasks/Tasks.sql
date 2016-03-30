@@ -29,7 +29,7 @@ CREATE TABLE [dbo].[Tasks] (
     CompletedOn           DATETIME2       NULL,
     ModifyDate            DATETIME2       NULL,
     CONSTRAINT [PK_Tasks]        PRIMARY KEY (TaskId),
-    --CONSTRAINT [FK_Tasks_Users]  FOREIGN KEY (UserId)  REFERENCES [dbo].[Users] ([UserId]),
+    CONSTRAINT [FK_Tasks_Users]  FOREIGN KEY (UserId)  REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Tasks_RecurringTaskGroups]  FOREIGN KEY (GroupId)  REFERENCES [dbo].[RecurringTaskGroups] (GroupId),
     CONSTRAINT [FK_Tasks_Tasks]  FOREIGN KEY (DependantTaskId)  REFERENCES [dbo].[Tasks] ([TaskId])
 );

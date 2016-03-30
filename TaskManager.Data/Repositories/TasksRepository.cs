@@ -20,7 +20,8 @@ namespace TaskManager.Data.Repositories
         {
             return this.dbContextAccessor.DbContext.Set<TaskModel>()
                 .Include(t => t.RecurringTaskGroup)
-                .Where(t => t.TaskId == id).SingleOrDefault();
+                .Where(t => t.TaskId == id)
+                .SingleOrDefault();
         }
 
         public IEnumerable<TaskVo> GetTasks(int userId)

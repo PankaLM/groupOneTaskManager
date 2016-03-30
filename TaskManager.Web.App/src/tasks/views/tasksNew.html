@@ -1,3 +1,14 @@
-<h1>{{ page }} angular </h1>
+<ng-form name="editTaskForm">
+  <div class="panel">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <button type="button" ng-click="save()" class="btn btn-primary btn-xs glyphicon glyphicon-floppy-disk"></button>
+        <button type="button" ng-click="back()" class="btn btn-primary btn-xs glyphicon glyphicon-menu-left"></button>
+      </div>
+    </div>
 
-<a ui-sref="page({pageName:'test'})"><i class="fa fa-angle-right"></i> Go to test page</a>
+    <div class="well-sm panel-body">
+      <task ng-model="newTask" name="taskFom"></task>
+    </div>
+  </div>
+</ng-form>

@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Microsoft.Owin.Security.OAuth;
-using System.Net.Http;
 using TaskManager.Web.Api.Controllers;
 using TaskManager.Web.Api.OAuth;
 
@@ -15,6 +14,7 @@ namespace TaskManager.Web.Api
             moduleBuilder.RegisterType<ApplicationOAuthBearerProvider>().As<IOAuthBearerAuthenticationProvider>().SingleInstance();
             
             moduleBuilder.RegisterType<TasksController>().InstancePerLifetimeScope();
+
         }
-    }
+}
 }

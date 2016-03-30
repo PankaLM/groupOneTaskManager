@@ -10,6 +10,10 @@ namespace TaskManager.Domain.Aggregates.Tasks
 {
     public class TaskModel : IAggregateRoot
     {
+        private TaskModel()
+        {
+        }
+
         public TaskModel(
             UserContext user,
             bool internalImportance,

@@ -37,6 +37,15 @@ function inject(stream, tag) {
   });
 }
 
+var relocateAssets = function (assets, cssDir) {
+  return es.merge.apply(null, _.map(_.keys(assets), function (key) {
+    return gulp.src(assets[key])
+      .pipe(plugins.rename(function (path) {
+        path.dirname = cssDir + key;
+      }));
+  }));
+};
+
 function queue() {
   var streams = _.isArray(arguments[0]) ? arguments[0] : _.toArray(arguments);
 
@@ -84,11 +93,14 @@ function buildTask(config, opts) {
           .pipe(plugins.rev()) :
         gulp.src(config.templates);
 
+      var assets = relocateAssets(config.assets, config.cssDir);
+
       return uniqueQueue(
         appJs,
         libJs,
         css,
         templates,
+        assets,
         gulp.src('index.html')
           .pipe(plugins.template({ fullVersion: config.version + '.0#' + revision }))
           .pipe(inject(appJs, 'app.js'))

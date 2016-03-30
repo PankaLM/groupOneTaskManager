@@ -13,6 +13,7 @@ using TaskManager.Web.Api.Utils;
 
 namespace TaskManager.Web.Api.Controllers
 {
+  //  [Authorize]
     [RoutePrefix("api/tasks")]
     public class TasksController : ApiController
     {
@@ -66,7 +67,6 @@ namespace TaskManager.Web.Api.Controllers
 
             return new CreateResultDo() { Id = task.TaskId };
         }
-
 
         [Route("{id:int}")]
         [HttpGet]
@@ -135,7 +135,7 @@ namespace TaskManager.Web.Api.Controllers
         [Route("{id:int}/postpone")]
         [HttpPost]
         [Transaction]
-        public void UpdateTask(int id, DateTime newDeadline)
+        public void PostponeTask(int id, DateTime newDeadline)
         {
             var task = this.tasksRepository.Find(id);
             if (task.UserId != this.userContext.UserId)
@@ -144,6 +144,22 @@ namespace TaskManager.Web.Api.Controllers
             }
 
             task.Postpone(newDeadline);
+
+            this.unitOfWork.Save();
+        }
+
+        [Route("{id:int}")]
+        [HttpDelete]
+        [Transaction]
+        public void RemoveTask(int id)
+        {
+            var task = this.tasksRepository.Find(id);
+            if (task.UserId != this.userContext.UserId)
+            {
+                throw new Exception("You do not have permissions on this task");
+            }
+            
+            this.tasksRepository.Remove(task);
 
             this.unitOfWork.Save();
         }
