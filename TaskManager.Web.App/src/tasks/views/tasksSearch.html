@@ -1,39 +1,41 @@
 <ng-form name="editTaskForm">
   <div class="panel">
-    <div class="panel-heading">
-      <div class="pull-right">
-        <a type="button" ng-click="createNew()" class="btn btn-primary btn-xs glyphicon glyphicon-plus"></a>
-      </div>
-    </div>
     <div class="well-sm panel-body">
-      <div class="col-xs-12 filter-item">
-          <div class="input-group">
-              <span>Filter the number of tasks</span>
-              <input type="number" class="form-control" ng-disabled="readonly" ng-model="taskLimit" ng-change="limitTasks()">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="input-group pull-left">
+            <span>Filter the number of tasks</span>
+            <input type="number" class="form-control" min="1" max="100" ng-disabled="readonly" ng-model="taskLimit" ng-change="limitTasks()">
           </div>
+          <div class="pull-right" style="margin-top:20px">
+            <a type="button" ng-click="createNew()" class="btn btn-primary btn-sm glyphicon glyphicon-plus"></a>
+          </div>
+        </div>
       </div>
-      <div class="col-xs-12" style="margin-top: 20px;">
-        <table class="table table-striped table-bordered table-hover table-condensed">
-          <tr class="days">
-            <th width="1px" ng-if="tasks.length !== 0"></th>
-            <th width="1px" ng-if="tasks.length !== 0"></th>
-            <th>Title</th>
-            <th>Fly score</th>
-            <th>Deadline</th>
-            <th>Duration</th>
-          </tr>
-          <tr ng-repeat-end ng-repeat="task in tasks">
-            <td ng-if="tasks.length !== 0"><a type="button" ng-click="edit(task.taskId)" class="glyphicon glyphicon-pencil"></a></td>
-            <td ng-if="tasks.length !== 0"><a type="button" ng-click="remove(task.taskId)" class="glyphicon glyphicon-remove"></a></td>
-            <td>{{task.title}}</td>
-            <td>{{task.flyScore}}</td>
-            <td>{{task.deadline | date : 'dd.MM.yy'}}</td>
-            <td>{{task.duration}}</td>
-          </tr>
-          <tr ng-if="tasks.length === 0">
-            <td colspan="4"> You have no tasks </td>
-          </tr>
-        </table>
+      <div class="row">
+        <div class="col-xs-12" style="margin-top: 20px;">
+          <table class="table table-striped table-bordered table-hover table-condensed">
+            <tr class="days">
+              <th width="1px" ng-if="tasks.length !== 0"></th>
+              <th width="1px" ng-if="tasks.length !== 0"></th>
+              <th>Title</th>
+              <th>Fly score</th>
+              <th>Deadline</th>
+              <th>Duration</th>
+            </tr>
+            <tr ng-repeat-end ng-repeat="task in tasks">
+              <td ng-if="tasks.length !== 0"><a type="button" ng-click="edit(task.taskId)" class="glyphicon glyphicon-pencil"></a></td>
+              <td ng-if="tasks.length !== 0"><a type="button" ng-click="remove(task.taskId)" class="glyphicon glyphicon-remove"></a></td>
+              <td>{{task.title}}</td>
+              <td>{{task.flyScore}}</td>
+              <td>{{task.deadline | date : 'dd.MM.yy'}}</td>
+              <td>{{task.duration}}</td>
+            </tr>
+            <tr ng-if="tasks.length === 0">
+              <td colspan="4"> You have no tasks </td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>

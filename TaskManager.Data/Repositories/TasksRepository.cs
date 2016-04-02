@@ -28,7 +28,7 @@ namespace TaskManager.Data.Repositories
         {
             return this.dbContextAccessor.DbContext.Set<TaskModel>()
                 .Where(t => t.UserId == userId)
-                .OrderBy(t => t.FlyScore)
+                .OrderByDescending(t => t.FlyScore)
                 .Select(t => new TaskVo()
                  {
                      TaskId = t.TaskId,
