@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="OAuth\ApplicationOAuthBearerProvider.cs" />
     <Compile Include="OAuth\ApplicationOAuthServerProvider.cs" />
+    <Compile Include="Tasks\Controllers\StateNomsController.cs" />
     <Compile Include="Tasks\Controllers\TasksController.cs" />
     <Compile Include="Tasks\DataObjects\TaskDo.cs" />
     <Compile Include="Utils\TransactionAttribute.cs" />

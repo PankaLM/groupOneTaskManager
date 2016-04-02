@@ -63,4 +63,14 @@
       <input type="number" class="form-control" ng-disabled="readonly" ng-model="model.duration" aria-describedby="durationAdon">
     </div>
   </div>
+  <div class="row">
+    <div class="input-group col-xs-12">
+      <span class="input-group-addon" id="stateAdon">State</span>
+      <select ng-model="model.stateId"
+              ng-options="value.id as value.name for value in states"
+              class="form-control" aria--describedby="stateAdon" ng-disabled="readonly">
+        <option></option>
+      </select>
+    </div>
+  </div>
 </ng-form>

@@ -101,6 +101,7 @@
     <Compile Include="Data\Common\IUnitOfWork.cs" />
     <Compile Include="Data\Repositories\Tasks\ITasksRepository.cs" />
     <Compile Include="Data\Repositories\Users\IUsersRepository.cs" />
+    <Compile Include="Data\ViewObjects\ValueVo.cs" />
     <Compile Include="Data\ViewObjects\TaskVo.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

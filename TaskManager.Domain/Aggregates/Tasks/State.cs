@@ -8,26 +8,21 @@ namespace TaskManager.Domain.Aggregates.Tasks
 {
     public class State
     {
-        public static State Deleted = new State(1, "Deleted", "Изтрита");
+        public static State Initialized = new State(1, "Initialized");
 
-        public static State InProgress = new State(2, "InProgress", "В прогрес");
+        public static State InProgress = new State(2, "InProgress");
 
-        public static State Done = new State(3, "Done", "Готова");
+        public static State Done = new State(3, "Done");
 
-        public static State Initialized = new State(4, "Initialized", "Инициализирана");
-
-        private State(int StateId, string nameEn, string name)
+        private State(int StateId, string name)
         {
             this.StateId = StateId;
             this.Name = name;
-            this.NameEn = nameEn;
         }
 
         public int StateId { get; private set; }
 
         public string Name { get; private set; }
-
-        public string NameEn { get; private set; }
 
         public static State GetById(int id)
         {
@@ -36,7 +31,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
 
         public static IEnumerable<State> GetAll()
         {
-            yield return Deleted;
             yield return InProgress;
             yield return Done;
             yield return Initialized;
