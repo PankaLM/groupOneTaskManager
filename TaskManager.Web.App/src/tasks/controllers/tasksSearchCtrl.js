@@ -7,7 +7,9 @@
       Tasks,
       tasks
     ) {
-    $scope.tasks = tasks;
+      $scope.originalTasks = tasks;
+      $scope.tasks = tasks;
+      $scope.taskLimit = null;
 
     $scope.createNew = function () {
       return $state.transitionTo('tasksNew', {});
@@ -25,6 +27,14 @@
                return task.taskId === id;
              });
         });
+    };
+
+    $scope.limitTasks = function () {
+      if ($scope.taskLimit) {
+          $scope.tasks = $scope.originalTasks.slice(0, $scope.taskLimit);
+      } else {
+          $scope.tasks = $scope.originalTasks;
+      }
     };
   }
 
