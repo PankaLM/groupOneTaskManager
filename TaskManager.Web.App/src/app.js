@@ -10,12 +10,16 @@
     ])
   .config([
     '$stateProvider',
+    '$urlRouterProvider',
     function (
-      $stateProvider) {
+      $stateProvider,
+      $urlRouterProvider) {
+
+      $urlRouterProvider.otherwise('/tasks');
 
       $stateProvider
         .state('tasks', {
-          url: '/',
+          url: '/tasks',
           controller: 'TasksSearchCtrl',
           templateUrl: 'tasks/views/tasksSearch.html',
           resolve: {
@@ -27,7 +31,7 @@
           }
         })
         .state("tasksEdit", {
-          url: 'edit/:id',
+          url: '/edit/:id',
           controller: 'TasksEditCtrl',
           templateUrl: 'tasks/views/tasksEdit.html',
           resolve: {
@@ -39,7 +43,7 @@
           }
         })
         .state("tasksNew", {
-          url: "new",
+          url: "/new",
           controller: 'TasksNewCtrl',
           templateUrl: 'tasks/views/tasksNew.html'
         });
