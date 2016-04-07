@@ -9,7 +9,7 @@
     ) {
       $scope.originalTasks = tasks;
       $scope.tasks = tasks;
-      $scope.taskLimit = null;
+      $scope.flyLimit = null;
 
     $scope.createNew = function () {
       return $state.transitionTo('tasksNew', {});
@@ -30,10 +30,13 @@
     };
 
     $scope.limitTasks = function () {
-      if ($scope.taskLimit) {
-          $scope.tasks = $scope.originalTasks.slice(0, $scope.taskLimit);
+      
+      if ($scope.flyLimit) {
+        $scope.tasks = _.filter($scope.originalTasks, function (task) {
+          return task.flyScore >= $scope.flyLimit;
+        });
       } else {
-          $scope.tasks = $scope.originalTasks;
+        $scope.tasks = $scope.originalTasks;
       }
     };
   }

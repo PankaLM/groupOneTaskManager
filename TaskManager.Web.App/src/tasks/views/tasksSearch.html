@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="input-group pull-left">
-            <span>Filter the number of tasks</span>
-            <input type="number" class="form-control" min="1" max="100" ng-disabled="readonly" ng-model="taskLimit" ng-change="limitTasks()">
+            <span>Fly score floor</span>
+            <input type="number" class="form-control" min="0" max="100" ng-disabled="readonly" ng-model="flyLimit" ng-change="limitTasks()">
           </div>
           <div class="pull-right" style="margin-top:20px">
             <a type="button" ng-click="createNew()" class="btn btn-primary btn-sm glyphicon glyphicon-plus"></a>
