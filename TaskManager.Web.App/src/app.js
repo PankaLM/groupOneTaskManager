@@ -6,7 +6,7 @@
         'ngResource',
         'localytics.directives',
         'ui.date',
-        'ngHandsontable'
+        'smart-table'
     ])
   .config([
     '$stateProvider',
