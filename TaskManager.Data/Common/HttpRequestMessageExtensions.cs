@@ -8,7 +8,6 @@ namespace TaskManager.Data.Common
     {
         public static UserContext GetUserContext(this HttpRequestMessage request)
         {
-            return new UserContext(1); //To do
             if (!request.GetOwinEnvironment().ContainsKey("oauth.Properties"))
             {
                 return new UnathorizedUserContext();

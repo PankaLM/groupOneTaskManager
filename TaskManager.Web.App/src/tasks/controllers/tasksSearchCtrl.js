@@ -30,7 +30,6 @@
     };
 
     $scope.limitTasks = function () {
-      
       if ($scope.flyLimit) {
         $scope.tasks = _.filter($scope.originalTasks, function (task) {
           return task.flyScore >= $scope.flyLimit;

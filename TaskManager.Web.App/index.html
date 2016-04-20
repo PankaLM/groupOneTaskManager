@@ -23,9 +23,11 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-                <div id="navbar" class="collapse navbar-collapse">
+                <div id="navbar" class="collapse navbar-collapse" ng-controller="AppCtrl">
                     <ul class="nav navbar-nav">
                         <li class="active"><a ui-sref="tasks" class="glyphicon glyphicon-home"></a></li>
+                        <li><a ui-sref="login">Log in</a></li>
+                        <li><a ng-click="logout()">Log out</a></li>
                     </ul>
                 </div>
             </div>

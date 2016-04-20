@@ -3,6 +3,7 @@ using Microsoft.Owin.Security.OAuth;
 using TaskManager.Web.Api.Controllers;
 using TaskManager.Web.Api.OAuth;
 using TaskManager.Web.Api.Tasks.Controllers;
+using TaskManager.Web.Api.Users;
 
 namespace TaskManager.Web.Api
 {
@@ -14,7 +15,8 @@ namespace TaskManager.Web.Api
             moduleBuilder.RegisterType<ApplicationOAuthBearerProvider>().As<IOAuthBearerAuthenticationProvider>().SingleInstance();
             
             moduleBuilder.RegisterType<TasksController>().InstancePerLifetimeScope();
-            moduleBuilder.RegisterType<StateNomsController>().InstancePerLifetimeScope();        
+            moduleBuilder.RegisterType<StateNomsController>().InstancePerLifetimeScope();
+            moduleBuilder.RegisterType<UsersController>().InstancePerLifetimeScope();
         }
     }
 }

@@ -1,14 +1,15 @@
 ﻿(function (angular) {
   'use strict';
 
-  function TaskDirective(Noms) {
+  function UserDirective() {
     return {
       priority: 110,
       replace: true,
-      templateUrl: 'common/directives/task/task.html',
+      templateUrl: 'common/directives/user/user.html',
       scope: {
         model: '=ngModel',
-        readonly: '='
+        readonly: '=',
+        isNew: '='
       },
       link: {
         post: function (scope, element, attrs) {
@@ -16,20 +17,11 @@
             scope.$parent.$watch(attrs.readonly, function (readonly) {
               scope.readonly = readonly;
             });
-
-            Noms
-              .query({ alias: 'states' })
-              .$promise
-              .then(function (states) {
-                scope.states = states;
-              });
           }
         }
       }
     };
   }
 
-  TaskDirective.$inject = ['Noms'];
-
-  angular.module('taskManager').directive('task', TaskDirective);
+  angular.module('taskManager').directive('user', UserDirective);
 }(angular));

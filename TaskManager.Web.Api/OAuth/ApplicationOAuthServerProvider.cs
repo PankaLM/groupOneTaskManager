@@ -27,8 +27,7 @@ namespace TaskManager.Web.Api.OAuth
                 ClaimsIdentity oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);                
                 AuthenticationProperties properties = new AuthenticationProperties(new Dictionary<string, string>
                 {
-                  //  { "userId", user.UserId.ToString() } TODO
-                  { "userId", "1"}
+                    { "userId", user.UserId.ToString() }
                 });
                 context.Validated(new AuthenticationTicket(oAuthIdentity, properties));
                 context.Request.Context.Authentication.SignIn(oAuthIdentity);

@@ -93,6 +93,8 @@
     <Compile Include="Common\Linq\ExpressionHelper.cs" />
     <Compile Include="Common\Owin\RerouteExtensions.cs" />
     <Compile Include="Common\Owin\RerouteMiddleware.cs" />
+    <Compile Include="Common\Owin\SessionExtensions.cs" />
+    <Compile Include="Common\Owin\SessionMiddleware.cs" />
     <Compile Include="Common\UnitOfWork.cs" />
     <Compile Include="DataModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

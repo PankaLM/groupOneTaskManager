@@ -16,6 +16,29 @@ namespace TaskManager.Domain.Aggregates.Users
             this.UserAchievements = new List<UserAchievement>();
         }
 
+        public User(
+            string username,
+            string fullname,
+            string email,
+            string password)
+        {
+            this.Fullname = fullname;
+            this.Username = username;
+            this.Email = email;
+            this.SetPassword(password);
+            this.IsActive = true;
+        }
+
+        public void Modify(
+           string fullname,
+           string email,
+           string password)
+        {
+            this.Fullname = fullname;
+            this.Email = email;
+            this.SetPassword(password);
+        }
+
         public int UserId { get; private set; }
 
         public string Username { get; private set; }
@@ -39,7 +62,7 @@ namespace TaskManager.Domain.Aggregates.Users
 
         public IList<UserAchievement> UserAchievements { get; private set; }
 
-        public void SetPassword(string password)
+        private void SetPassword(string password)
         {
             if (password == null)
             {

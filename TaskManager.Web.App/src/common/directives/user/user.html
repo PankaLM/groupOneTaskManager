@@ -1,0 +1,30 @@
+﻿<ng-form class="form-inline" ng-readonly="readonly" name="userForm">
+  <div class="row">
+    <div class="input-group">
+      <span class="input-group-addon" id="usernameAdon">Username</span>
+      <input type="text" class="form-control" ng-disabled="readonly" ng-model="newUser.username" aria-describedby="usernameAdon">
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-group">
+      <span class="input-group-addon" id="fullnameAdon">Fullname</span>
+      <input type="text" class="form-control" ng-disabled="readonly" ng-model="model.fullname" aria-describedby="fullnameAdon">
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': saveClicked && userForm.password.$invalid}">
+    <span class="input-group-addon" id="fullnameAdon">Fullname</span>
+    <label class="control-label col-sm-3" l10n-text="common.users.edit.password"></label>
+    <div class="col-sm-4">
+      <input type="password" name="password" class="input-sm form-control" ng-required="setPassword && !isEdit" ng-minlength="8" ng-model="password" />
+      <span id="passInvalid" class="help-block" ng-show="saveClicked && userForm.password.$invalid" l10n-text="common.users.edit.passMustBeMin8symbols"></span>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{'has-error': saveClicked && (password !== confirmPassword)}"
+       ng-show="setPassword">
+    <label class="control-label col-sm-3" l10n-text="common.users.edit.repeatPass"></label>
+    <div class="col-sm-4">
+      <input type="password" name="confirmPassword" class="input-sm form-control" ng-model="confirmPassword">
+      <span id="confirmPassInvalid" class="help-block" ng-show="saveClicked && (password !== confirmPassword)" l10n-text="common.users.edit.doNotMatch"></span>
+    </div>
+  </div>
+</ng-form>

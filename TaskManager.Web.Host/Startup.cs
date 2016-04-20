@@ -40,7 +40,7 @@ namespace TaskManager.Web.Host
         private void Configure(IAppBuilder app, IContainer container)
         {
             app.UseAutofacMiddleware(container);
-         //   app.UseSession();
+            app.UseSession();
             ConfigureAuth(app, container);
             ConfigureWebApi(app, container);
             ConfigureStaticFiles(app);

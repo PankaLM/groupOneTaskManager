@@ -103,6 +103,8 @@
     <Compile Include="Tasks\Controllers\StateNomsController.cs" />
     <Compile Include="Tasks\Controllers\TasksController.cs" />
     <Compile Include="Tasks\DataObjects\TaskDo.cs" />
+    <Compile Include="Users\Controllers\UsersController.cs" />
+    <Compile Include="Users\DataObjects\UserDo.cs" />
     <Compile Include="Utils\TransactionAttribute.cs" />
     <Compile Include="WebApiModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
