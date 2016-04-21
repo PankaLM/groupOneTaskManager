@@ -31,12 +31,10 @@ namespace TaskManager.Domain.Aggregates.Users
 
         public void Modify(
            string fullname,
-           string email,
-           string password)
+           string email)
         {
             this.Fullname = fullname;
             this.Email = email;
-            this.SetPassword(password);
         }
 
         public int UserId { get; private set; }

@@ -56,6 +56,18 @@
             url: '/register',
             controller: 'RegisterCtrl',
             templateUrl: 'users/views/register.html'
+          })
+          .state('profile', {
+            url: '/profile',
+            controller: 'UsersEditCtrl',
+            templateUrl: 'users/views/usersEdit.html',
+            resolve: {
+              user: [
+                '$stateParams', 'Users',
+                function ($stateParams, Users) {
+                  return Users.getUserProfile().$promise;
+                }]
+            }
           });
     }])
     .run(['$rootScope', '$state',
@@ -64,11 +76,15 @@
             $state.go('login');
           });
         }
-    ]).controller('AppCtrl', ['$scope', 'authenticationService', '$state',
-      function ($scope, authenticationService, $state) {
+    ]).controller('AppCtrl', ['$rootScope', '$scope', 'authenticationService', '$state',
+      function ($rootScope, $scope, authenticationService, $state) {
         $scope.logout = function () {
           authenticationService.signOut();
           $state.go('login');
         };
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
+          $scope.isLoggedIn = authenticationService.isLoggedIn();
+        });
+        
     }]);
 }(angular));

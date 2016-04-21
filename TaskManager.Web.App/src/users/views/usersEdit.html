@@ -1,0 +1,37 @@
+﻿<div class="col-md-6 col-md-offset-3">
+  <h2>Profile</h2>
+  <form name="form" ng-submit="update()" role="form">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" ng-model="user.username" readonly />
+    </div>
+    <div class="form-group" ng-class="{ 'has-error': form.fullname.$dirty && form.fullname.$error.required }">
+      <label for="fullname">Full name</label>
+      <input type="text" name="fullname" id="Text1" class="form-control" ng-model="user.fullname" required />
+      <span ng-show="form.fullname.$dirty && form.fullname.$error.required" class="help-block">Fullname name is required</span>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+      <label for="username">E-mail</label>
+      <input type="text" name="email" id="email" class="form-control" ng-model="user.email" required />
+      <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">E-mail is required</span>
+    </div>
+    <div class="form-group" ng-class="{ 'has-error': form.oldPassword.$dirty && form.oldPassword.$error.required }" >
+      <label for="oldPassword">Old Password</label>
+      <input type="password" name="oldPassword" id="oldPassword" class="form-control" ng-model="user.oldPassword" ng-minlength="8" ng-required="!!user.newPassword" />
+      <span ng-show="form.oldPassword.$dirty && form.oldPassword.$error.required" class="help-block">Old Password is required</span>
+      <span ng-show="form.oldPassword.$dirty && form.oldPassword.$error.minlength" class="help-block">Old Password must be at least 8 symbols</span>
+      <span ng-show="form.oldPassword.$dirty && isInvalidPassword" class="help-block">Old Password is not correct</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': form.newPassword.$dirty && form.newPassword.$error.required }">
+      <label for="newPassword">New Password</label>
+      <input type="password" name="newPassword" id="newPassword" class="form-control" ng-model="user.newPassword" ng-minlength="8" ng-required="!!user.oldPassword" />
+      <span ng-show="form.newPassword.$dirty && form.newPassword.$error.minlength" class="help-block">New Password must be at least 8 symbols</span>
+      <span ng-show="form.newPassword.$dirty && form.newPassword.$error.required" class="help-block">New Password is required</span>
+    </div>
+    <div class="form-actions">
+      <button type="submit" ng-disabled="form.$invalid || submitting" class="btn btn-primary">Update</button>
+      <a href="#/login" class="btn btn-link">Cancel</a>
+    </div>
+  </form>
+</div>

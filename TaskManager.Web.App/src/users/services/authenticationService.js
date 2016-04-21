@@ -70,6 +70,15 @@
           return $q.when();
         };
 
+        AuthenticationService.prototype.isLoggedIn = function () {
+          var accessToken = sessionTokenStore.getToken();
+          if (accessToken) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+
         return new AuthenticationService();
       }
   ])
