@@ -50,6 +50,8 @@
     <Content Include="src\common\directives\task\task.js" />
     <Content Include="src\common\directives\user\user.html" />
     <Content Include="src\common\directives\user\user.js" />
+    <Content Include="src\settings\controllers\SettingsEditCtrl.js" />
+    <Content Include="src\settings\views\settingsEdit.html" />
     <Content Include="src\tasks\controllers\tasksNewCtrl.js" />
     <Content Include="src\tasks\controllers\tasksEditCtrl.js" />
     <Content Include="src\common\resources\noms.js" />
