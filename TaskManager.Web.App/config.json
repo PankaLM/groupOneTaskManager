@@ -14,6 +14,7 @@
     "src/bower_components/jquery-ui/jquery-ui.js",
     "src/bower_components/angular/angular.min.js",
     "src/bower_components/chosen/chosen.jquery.js",
+    "src/bower_components/bootstrap/dist/js/bootstrap.min.js",
     "src/bower_components/angular-ui-date/dist/date.js",
     "src/bower_components/angular-chosen-localytics/dist/angular-chosen.min.js",
     "src/bower_components/angular-ui-router/release/angular-ui-router.js",
@@ -29,8 +30,7 @@
   ],
   "assets": {
     "../fonts/": [
-      "src/bower_components/bootstrap/dist/fonts/**",
-      "src/bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2"
+      "src/bower_components/bootstrap/dist/fonts/**"
     ],
     "../images/": [
       "src/bower_components/jquery-ui/themes/smoothness/images/**"
