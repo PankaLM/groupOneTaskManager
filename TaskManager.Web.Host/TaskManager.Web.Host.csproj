@@ -187,6 +187,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TaskManager.Common\TaskManager.Common.csproj">
+      <Project>{43a8e7f3-34dd-4ded-aa9d-a62712900917}</Project>
+      <Name>TaskManager.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaskManager.Data\TaskManager.Data.csproj">
       <Project>{f7490d83-8a33-4685-baf9-713a5e345a25}</Project>
       <Name>TaskManager.Data</Name>

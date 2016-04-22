@@ -16,7 +16,6 @@
             scope.$parent.$watch(attrs.readonly, function (readonly) {
               scope.readonly = readonly;
             });
-
             Noms
               .query({ alias: 'states' })
               .$promise

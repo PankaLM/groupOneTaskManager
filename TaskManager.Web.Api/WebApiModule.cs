@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Microsoft.Owin.Security.OAuth;
+using TaskManager.Common.Jobs;
 using TaskManager.Web.Api.Controllers;
+using TaskManager.Web.Api.Jobs;
 using TaskManager.Web.Api.OAuth;
 using TaskManager.Web.Api.Tasks.Controllers;
 using TaskManager.Web.Api.Users;
@@ -17,6 +19,8 @@ namespace TaskManager.Web.Api
             moduleBuilder.RegisterType<TasksController>().InstancePerLifetimeScope();
             moduleBuilder.RegisterType<StateNomsController>().InstancePerLifetimeScope();
             moduleBuilder.RegisterType<UsersController>().InstancePerLifetimeScope();
+
+            moduleBuilder.RegisterType<EmailSender>().As<IJob>().ExternallyOwned();
         }
     }
 }

@@ -11,6 +11,7 @@ using Owin;
 using System;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using TaskManager.Common.Jobs;
 using TaskManager.Data;
 using TaskManager.Data.Common;
 using TaskManager.Data.Common.Owin;
@@ -44,6 +45,7 @@ namespace TaskManager.Web.Host
             ConfigureAuth(app, container);
             ConfigureWebApi(app, container);
             ConfigureStaticFiles(app);
+            StartJobs(container);
         }
 
         private void ConfigureAuth(IAppBuilder app, IContainer container)
@@ -90,6 +92,7 @@ namespace TaskManager.Web.Host
             config.Formatters.JsonFormatter.SerializerSettings = JsonSettings.JsonSerializerSettings;
             // fix for ie9 not supporting json
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.JsonFormatter.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
 
             config.MapHttpAttributeRoutes();
 
@@ -116,6 +119,16 @@ namespace TaskManager.Web.Host
                     }
                 }
             });
+        }
+
+        public static void StartJobs(IContainer container)
+        {
+            var jobs = container.Resolve<IJob[]>();
+
+            foreach (var job in jobs)
+            {
+                job.Action();
+            }
         }
     }
 }

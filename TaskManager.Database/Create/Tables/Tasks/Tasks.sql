@@ -28,6 +28,8 @@ CREATE TABLE [dbo].[Tasks] (
     StartedOn             DATETIME2       NOT NULL,
     CompletedOn           DATETIME2       NULL,
     ModifyDate            DATETIME2       NULL,
+    Notified              BIT             NOT NULL,
+
     CONSTRAINT [PK_Tasks]        PRIMARY KEY (TaskId),
     CONSTRAINT [FK_Tasks_Users]  FOREIGN KEY (UserId)  REFERENCES [dbo].[Users] ([UserId]),
     CONSTRAINT [FK_Tasks_RecurringTaskGroups]  FOREIGN KEY (GroupId)  REFERENCES [dbo].[RecurringTaskGroups] (GroupId),

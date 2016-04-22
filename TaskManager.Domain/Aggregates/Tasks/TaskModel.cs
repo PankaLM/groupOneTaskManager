@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using TaskManager.Common;
 using TaskManager.Common.UserContextModels;
@@ -53,6 +54,7 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.ModifyFlyScore();
 
             this.ModifyDate = DateTime.Now;
+            this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true ;
         }
 
         public void Modify(
@@ -91,7 +93,7 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.ModifyState(stateId);
 
             this.ModifyDate = DateTime.Now;
-
+            this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true;
         }
 
         public int TaskId { get; private set; }
@@ -156,6 +158,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
 
         public DateTime? ModifyDate { get; private set; }
 
+        public bool Notified { get; private set; }
+
         public RecurringTaskGroup RecurringTaskGroup { get; private set; }
 
         public User User { get; private set; }
@@ -214,6 +218,11 @@ namespace TaskManager.Domain.Aggregates.Tasks
                 this.CompletedOn = DateTime.Now;
             }
         }
+
+        public void MarkAsNotified()
+        {
+            this.Notified = true;
+        }
     }
 
     public class TaskMap : EntityTypeConfiguration<TaskModel>
@@ -255,6 +264,7 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Property(t => t.StartedOn).HasColumnName("StartedOn");
             this.Property(t => t.CompletedOn).HasColumnName("CompletedOn");
             this.Property(t => t.ModifyDate).HasColumnName("ModifyDate");
+            this.Property(t => t.Notified).HasColumnName("Notified");
 
             // Relationships
             this.HasOptional(t => t.RecurringTaskGroup)

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DataObjects\CreateResultDo.cs" />
     <Compile Include="FlyCharacteristicWeights.cs" />
+    <Compile Include="Jobs\IJob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskManagerConstants.cs" />
     <Compile Include="UserContextModels\UnathorizedUserContext.cs" />
