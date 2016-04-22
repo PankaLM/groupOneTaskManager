@@ -73,7 +73,7 @@
 
      SessionTokenStore.prototype.deleteToken = function () {
        var tokens;
-
+       this.token = null;
        if ($window.localStorage.sessionTokens) {
          tokens = JSON.parse($window.localStorage.sessionTokens);
          delete tokens[sessionKey];

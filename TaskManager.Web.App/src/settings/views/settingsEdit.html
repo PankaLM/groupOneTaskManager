@@ -1,0 +1,34 @@
+﻿<div class="panel">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="pull-left">
+          <h2>Settings</h2>
+        </div>
+        <div class="pull-right" style="margin-top:20px; margin-bottom:10px;">
+          <button type="button" ng-click="editMode = true" class="btn btn-primary btn-xs glyphicon glyphicon-pencil" ng-show="!editMode"></button>
+          <button type="button" ng-click="save()" class="btn btn-primary btn-xs glyphicon glyphicon-floppy-disk" ng-show="editMode"></button>
+          <button type="button" ng-click="back()" class="btn btn-primary btn-xs glyphicon glyphicon-menu-left"></button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="input-group">
+          <span class="input-group-addon" id="flyCutoffAddon">Fly Cutoff</span>
+          <input type="text" class="form-control" ng-disabled="!editMode" ng-model="settings.flyCutoff" aria-describedby="flyLimitAddon">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>The fly descision matrix</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <img src="http://i2.wp.com/www.agify.me/wp-content/uploads/2015/12/The-FLY-Decision-Matrix.png" alt="Fly Descision Matrix" style="max-height:100%; max-width:100%;" />
+      </div>
+    </div>
+  </div>
+</div>
