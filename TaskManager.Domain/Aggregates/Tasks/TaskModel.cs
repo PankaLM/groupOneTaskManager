@@ -31,7 +31,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             int? duration,
             int stateId,
             int? actionId,
-            int? dependantTaskId)
+            int? dependantTaskId,
+            State dependantTaskState)
         {
             this.UserId = user.UserId;
             this.InternalImportance = internalImportance;
@@ -45,16 +46,16 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Thumbnail = thumbnail;
             this.Deadline = deadline;
             this.Duration = duration;
-            this.DependantTaskId = dependantTaskId;
 
             this.ActionId = actionId;
             
             this.ModifyState(stateId);
             this.ModifyTag(tag);
             this.ModifyFlyScore();
-
+            this.ModifyDependantTask(dependantTaskId, dependantTaskState);
             this.ModifyDate = DateTime.Now;
             this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true ;
+
         }
 
         public void Modify(
@@ -72,7 +73,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             int? duration,
             int stateId,
             int? actionId,
-            int? dependantTaskId)
+            int? dependantTaskId,
+            State dependantTaskState)
         {
             this.InternalImportance = internalImportance;
             this.ExternalImportance = еxternalImportance;
@@ -85,12 +87,12 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Thumbnail = thumbnail;
             this.Deadline = deadline;
             this.Duration = duration;
-            this.DependantTaskId = dependantTaskId;
             this.ActionId = actionId;
 
             this.ModifyTag(tag);
             this.ModifyFlyScore();
             this.ModifyState(stateId);
+            this.ModifyDependantTask(dependantTaskId, dependantTaskState);
 
             this.ModifyDate = DateTime.Now;
             this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true;
@@ -222,6 +224,15 @@ namespace TaskManager.Domain.Aggregates.Tasks
         public void MarkAsNotified()
         {
             this.Notified = true;
+        }
+
+        public void ModifyDependantTask(int? dependantTaskId, State dependantTaskState)
+        {
+            this.DependantTaskId = dependantTaskId;
+            if (dependantTaskId.HasValue && dependantTaskState != State.Done)
+            {
+                this.StateId = State.Initialized.StateId;
+            }
         }
     }
 

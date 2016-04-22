@@ -1,7 +1,7 @@
-﻿(function (angular) {
+﻿(function (angular, _) {
   'use strict';
 
-  function TaskDirective(Noms) {
+  function TaskDirective($q, Noms) {
     return {
       priority: 110,
       replace: true,
@@ -12,12 +12,25 @@
       },
       link: {
         pre: function (scope) {
-          Noms
-             .query({ alias: 'states' })
-             .$promise
-             .then(function (states) {
-               scope.states = states;
-             });
+          var statesPromise = Noms
+            .query({ alias: 'states' })
+            .$promise;
+          var tasksPromise = Noms
+            .query({ alias: 'tasks', taskId: scope.model.taskId })
+            .$promise;
+          $q.all({
+            states: statesPromise,
+            tasks: tasksPromise
+          })
+            .then(function (results) {
+              scope.states = results.states;
+              scope.tasks = results.tasks;
+              if (scope.model.dependantTaskId) {
+                scope.dependantTask = _.filter(scope.tasks, function (task) {
+                  return task.id === scope.model.dependantTaskId;
+                })[0];
+              }
+            });
         },
         post: function (scope, element, attrs) {
           if (attrs.readonly) {
@@ -25,12 +38,18 @@
               scope.readonly = readonly;
             });
           }
+     
+          scope.$watch('model.dependantTaskId', function (value) {
+            scope.dependantTask = _.filter(scope.tasks, function (task) {
+              return task.id === scope.model.dependantTaskId;
+            })[0];
+          });
         }
       }
     };
   }
 
-  TaskDirective.$inject = ['Noms'];
+  TaskDirective.$inject = ['$q', 'Noms'];
 
   angular.module('taskManager').directive('task', TaskDirective);
-}(angular));
+}(angular, _));

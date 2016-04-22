@@ -8,6 +8,8 @@ namespace TaskManager.Web.Api.Tasks.DataObjects
 {
     public class TaskDo
     {
+        public int TaskId { get; set; }
+
         public int UserId { get; set; }
 
         public bool InternalImportance { get; set; }

@@ -53,6 +53,7 @@ namespace TaskManager.Web.Api.Controllers
         [Transaction]
         public CreateResultDo CreateTaskDo(TaskDo taskDo)
         {
+            var dependantTask = taskDo.DependantTaskId.HasValue ? this.tasksRepository.Find(taskDo.DependantTaskId.Value) : null;
             TaskModel task = new TaskModel(
                 this.userContext,
                 taskDo.InternalImportance,
@@ -69,7 +70,8 @@ namespace TaskManager.Web.Api.Controllers
                 taskDo.Duration,
                 taskDo.StateId,
                 taskDo.ActionId,
-                taskDo.DependantTaskId);
+                taskDo.DependantTaskId,
+                dependantTask != null ? dependantTask.State : null);
 
             this.tasksRepository.Add(task);
 
@@ -90,6 +92,7 @@ namespace TaskManager.Web.Api.Controllers
 
             return new TaskDo()
             {
+                TaskId = task.TaskId,
                 UserId = task.UserId,
                 InternalImportance = task.InternalImportance,
                 ExternalImportance = task.ExternalImportance,
@@ -122,6 +125,7 @@ namespace TaskManager.Web.Api.Controllers
                 throw new Exception("You do not have permissions on this task");
             }
 
+            var dependantTask = taskDo.DependantTaskId.HasValue ? this.tasksRepository.Find(taskDo.DependantTaskId.Value) : null;
             task.Modify(
                 taskDo.InternalImportance,
                 taskDo.ExternalImportance,
@@ -137,7 +141,8 @@ namespace TaskManager.Web.Api.Controllers
                 taskDo.Duration,
                 taskDo.StateId,
                 taskDo.ActionId,
-                taskDo.DependantTaskId);
+                taskDo.DependantTaskId,
+                dependantTask != null ? dependantTask.State : null);
 
             this.unitOfWork.Save();
         }

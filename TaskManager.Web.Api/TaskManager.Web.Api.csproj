@@ -106,6 +106,7 @@
     <Compile Include="Jobs\EmailSender.cs" />
     <Compile Include="OAuth\ApplicationOAuthBearerProvider.cs" />
     <Compile Include="OAuth\ApplicationOAuthServerProvider.cs" />
+    <Compile Include="Tasks\Controllers\TaskNomsController.cs" />
     <Compile Include="Tasks\Controllers\StateNomsController.cs" />
     <Compile Include="Tasks\Controllers\TasksController.cs" />
     <Compile Include="Tasks\DataObjects\TaskDo.cs" />

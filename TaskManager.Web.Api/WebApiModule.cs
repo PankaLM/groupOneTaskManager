@@ -17,6 +17,7 @@ namespace TaskManager.Web.Api
             moduleBuilder.RegisterType<ApplicationOAuthBearerProvider>().As<IOAuthBearerAuthenticationProvider>().SingleInstance();
             
             moduleBuilder.RegisterType<TasksController>().InstancePerLifetimeScope();
+            moduleBuilder.RegisterType<TaskNomsController>().InstancePerLifetimeScope();
             moduleBuilder.RegisterType<StateNomsController>().InstancePerLifetimeScope();
             moduleBuilder.RegisterType<UsersController>().InstancePerLifetimeScope();
 
