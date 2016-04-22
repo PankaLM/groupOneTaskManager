@@ -16,7 +16,14 @@
         $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/login');
-
+        $urlRouterProvider.otherwise(function($injector, $location){
+          var isLoggedIn = $injector.get('authenticationService').isLoggedIn();
+          if (isLoggedIn) {
+            $location.url('/tasks');
+          } else {
+            $location.url('/login');
+          }
+        });
         $stateProvider
           .state('tasks', {
             url: '/tasks',
@@ -68,6 +75,11 @@
                   return Users.getUserProfile().$promise;
                 }]
             }
+          })
+          .state('settings', {
+            url: '/settings',
+            controller: 'SettingsEditCtrl',
+            templateUrl: 'settings/views/settingsEdit.html'
           });
     }])
     .run(['$rootScope', '$state',
@@ -80,7 +92,6 @@
       function ($rootScope, $scope, authenticationService, $state) {
         $scope.logout = function () {
           authenticationService.signOut();
-          $state.go('login');
         };
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
           $scope.isLoggedIn = authenticationService.isLoggedIn();
