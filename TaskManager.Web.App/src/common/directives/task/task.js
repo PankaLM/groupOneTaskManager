@@ -11,17 +11,19 @@
         readonly: '='
       },
       link: {
+        pre: function (scope) {
+          Noms
+             .query({ alias: 'states' })
+             .$promise
+             .then(function (states) {
+               scope.states = states;
+             });
+        },
         post: function (scope, element, attrs) {
           if (attrs.readonly) {
             scope.$parent.$watch(attrs.readonly, function (readonly) {
               scope.readonly = readonly;
             });
-            Noms
-              .query({ alias: 'states' })
-              .$promise
-              .then(function (states) {
-                scope.states = states;
-              });
           }
         }
       }

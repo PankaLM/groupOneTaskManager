@@ -8,7 +8,7 @@ namespace TaskManager.Domain.Aggregates.Tasks
 {
     public class State
     {
-        public static State Initialized = new State(1, "Initialized");
+        public static State Initialized = new State(1, "New");
 
         public static State InProgress = new State(2, "InProgress");
 

@@ -38,6 +38,16 @@ namespace TaskManager.Web.Api.Controllers
             return this.tasksRepository.GetTasks(this.userContext.UserId);
         }
 
+        [Route("new")]
+        [HttpGet]
+        public TaskDo GetNewTask()
+        {
+            return new TaskDo()
+            {
+                StateId = State.Initialized.StateId
+            };
+        }
+
         [Route("")]
         [HttpPost]
         [Transaction]

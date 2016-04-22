@@ -4,9 +4,10 @@
   function TasksNewCtrl(
       $scope,
       $state,
-      Tasks
+      Tasks,
+      newTask
     ) {
-    $scope.newTask = {};
+    $scope.newTask = newTask;
     $scope.editMode = false;
 
     $scope.back = function () {
@@ -25,7 +26,8 @@
   TasksNewCtrl.$inject = [
       '$scope',
       '$state',
-      'Tasks'
+      'Tasks',
+      'newTask'
     ];
   angular.module('taskManager').controller('TasksNewCtrl', TasksNewCtrl);
 }(angular));

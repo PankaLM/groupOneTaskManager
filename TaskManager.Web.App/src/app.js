@@ -52,7 +52,14 @@
           .state("tasksNew", {
             url: "/new",
             controller: 'TasksNewCtrl',
-            templateUrl: 'tasks/views/tasksNew.html'
+            templateUrl: 'tasks/views/tasksNew.html',
+            resolve: {
+              newTask: [
+                'Tasks',
+                function (Tasks) {
+                  return Tasks.getNew().$promise;
+                }]
+            }
           })
           .state('login', {
             url: '/login',
