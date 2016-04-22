@@ -15,7 +15,7 @@
         $stateProvider,
         $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/tasks');
+        $urlRouterProvider.otherwise('/login');
 
         $stateProvider
           .state('tasks', {
