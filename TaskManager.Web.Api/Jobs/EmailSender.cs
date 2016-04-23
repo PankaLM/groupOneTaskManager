@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web.Hosting;
 using TaskManager.Common.Jobs;
@@ -69,9 +70,11 @@ namespace TaskManager.Web.Api.Jobs
         {
             get
             {
-                return TimeSpan.FromMinutes(1440);
+                return TimeSpan.FromMinutes(300);
             }
         }
+
+        private readonly Regex EmailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
         public void Action()
         {
@@ -88,9 +91,11 @@ namespace TaskManager.Web.Api.Jobs
             {
                 try
                 {
+                    DateTime currentDate = DateTime.Now.Date;
                     var items = (from t in dbContextAccessor.Value.DbContext.Set<TaskModel>()
-                                .Where(d => DbFunctions.DiffDays(d.Deadline, DateTime.Now) <= 1 && !d.Notified)
-                                    join u in dbContextAccessor.Value.DbContext.Set<User>() on t.UserId equals u.UserId
+                                .Where(d => d.Deadline.HasValue && !d.Notified && DbFunctions.DiffDays(currentDate, d.Deadline) == 1)
+                                    join u in dbContextAccessor.Value.DbContext.Set<User>()
+                                            .Where(u => !string.IsNullOrEmpty(u.Email)) on t.UserId equals u.UserId
                                     select new
                                     {
                                         Task = t,
@@ -98,16 +103,16 @@ namespace TaskManager.Web.Api.Jobs
                                     })
                                 .ToList();
 
-                    foreach (var item in items)
+                    Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+
+                    foreach (var item in items.Where(i => EmailRegex.Match(i.Email).Success))
                     {
-                        MailMessage mailMessage = new MailMessage();
+                        MailMessage mailMessage = new MailMessage(defaultSender.Address, item.Email);
                         mailMessage.Subject = "Pending task";
-                        mailMessage.Body = string.Format("Hi, you have pending task \"{0}\" with deadline \"{1}\".", item.Task.Title, item.Task.Deadline);
-                        mailMessage.From = defaultSender;
-                        mailMessage.To.Add(new MailAddress(item.Email));
+                        mailMessage.Body = string.Format("Hi, you have pending task \"{0}\" with deadline \"{1}\".", item.Task.Title, item.Task.Deadline.Value.Date);
                         mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
                         mailMessage.IsBodyHtml = true;
-                        
+
                         smtpClient.Send(mailMessage);
                         item.Task.MarkAsNotified();
                     }
@@ -116,11 +121,10 @@ namespace TaskManager.Web.Api.Jobs
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    Console.WriteLine("Error in Email Sender: {0}", e);
                 }
             }
         }
-
         public void Dispose()
         {
             throw new NotImplementedException();
