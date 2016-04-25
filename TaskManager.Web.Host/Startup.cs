@@ -127,7 +127,7 @@ namespace TaskManager.Web.Host
 
             foreach (var job in jobs)
             {
-                job.Action();
+                job.Start();
             }
         }
     }

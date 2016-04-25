@@ -13,5 +13,7 @@ namespace TaskManager.Common.Jobs
         TimeSpan Period { get; }
 
         void Action();
+
+        void Start();
     }
 }

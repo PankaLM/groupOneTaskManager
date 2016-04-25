@@ -22,13 +22,22 @@ namespace TaskManager.Web.Api.Jobs
 
         public bool IsShuttingDown { get; private set; }
 
+        private Timer timer;
+
         public EmailSender(Func<Owned<IDbContextAccessor>> dbContextAccessorFactory)
         {
+            this.timer = new Timer(this.DoAction);
             this.dbContextAccessorFactory = dbContextAccessorFactory;
+            HostingEnvironment.RegisterObject(this);
+        }
+
+        public void DoAction(object sender)
+        {
             if (this.IsShuttingDown)
             {
                 return;
             }
+            
             if (Monitor.TryEnter(this.jobLock))
             {
                 try
@@ -40,10 +49,7 @@ namespace TaskManager.Web.Api.Jobs
                     Monitor.Exit(this.jobLock);
                 }
             }
-
-            HostingEnvironment.RegisterObject(this);
         }
-
         public void Stop(bool immediate)
         {
             this.IsShuttingDown = true;
@@ -70,11 +76,16 @@ namespace TaskManager.Web.Api.Jobs
         {
             get
             {
-                return TimeSpan.FromMinutes(300);
+                return TimeSpan.FromSeconds(300);
             }
         }
 
         private readonly Regex EmailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+
+        public void Start()
+        {
+            this.timer.Change(TimeSpan.FromSeconds(0), this.Period);
+        }
 
         public void Action()
         {
@@ -127,7 +138,7 @@ namespace TaskManager.Web.Api.Jobs
         }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            this.timer.Dispose();
         }
     }
 }
