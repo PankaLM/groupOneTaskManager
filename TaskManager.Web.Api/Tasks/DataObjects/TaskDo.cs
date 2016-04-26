@@ -28,8 +28,6 @@ namespace TaskManager.Web.Api.Tasks.DataObjects
 
         public string Description { get; set; }
 
-        public string Project { get; set; }
-
         public string Tag { get; set; }
 
         public string Thumbnail { get; set; }

@@ -1,43 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskManager.Domain.Aggregates.Tasks
 {
     public class Action
     {
-        public static Action Trash = new Action(1, "Trash", "Изхвърли");
+        public static Action Trash = new Action(1, "Trash");
 
-        public static Action Transfer = new Action(2, "Transfer", "Прехвърли на друг");
+        public static Action Transfer = new Action(2, "Transfer");
 
-        public static Action Schedule = new Action(3, "Schedule", "Пренасрочи");
+        public static Action Schedule = new Action(3, "Schedule");
 
-        public static Action Defer = new Action(4, "Defer", "Отсрочи");
+        public static Action Defer = new Action(4, "Defer");
 
-        public static Action Delegate = new Action(5, "Delegate", "Делегирай");
+        public static Action Delegate = new Action(5, "Delegate");
 
-        public static Action FollowUp = new Action(6, "Follow up", "Следи");
+        public static Action FollowUp = new Action(6, "Follow up");
 
-        public static Action Clarify = new Action(7, "Clarify", "Изясни");
+        public static Action Clarify = new Action(7, "Clarify");
 
-        public static Action Simplify = new Action(8, "Simplify", "Опрости");
+        public static Action Simplify = new Action(8, "Simplify");
 
-        public static Action Execute = new Action(9, "Execute", "Изпълни");
+        public static Action Execute = new Action(9, "Execute");
 
-        private Action(int actionId, string nameEn, string name)
+        private Action(int actionId, string name)
         {
             this.ActionId = actionId;
             this.Name = name;
-            this.NameEn = nameEn;
         }
 
         public int ActionId { get; private set; }
 
         public string Name { get; private set; }
-
-        public string NameEn { get; private set; }
 
         public static Action GetById(int id)
         {

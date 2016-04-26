@@ -19,6 +19,7 @@ namespace TaskManager.Web.Api
             moduleBuilder.RegisterType<TasksController>().InstancePerLifetimeScope();
             moduleBuilder.RegisterType<TaskNomsController>().InstancePerLifetimeScope();
             moduleBuilder.RegisterType<StateNomsController>().InstancePerLifetimeScope();
+            moduleBuilder.RegisterType<ActionNomsController>().InstancePerLifetimeScope();
             moduleBuilder.RegisterType<UsersController>().InstancePerLifetimeScope();
 
             moduleBuilder.RegisterType<EmailSender>().As<IJob>().ExternallyOwned();

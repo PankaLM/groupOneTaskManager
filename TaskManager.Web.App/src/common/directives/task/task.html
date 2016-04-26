@@ -41,12 +41,6 @@
   </div>
   <div class="row">
     <div class="input-group">
-      <span class="input-group-addon" id="projectAdon">Project</span>
-      <input type="text" class="form-control" ng-disabled="readonly" ng-model="model.project" aria-describedby="projectAdon">
-    </div>
-  </div>
-  <div class="row">
-    <div class="input-group">
       <span class="input-group-addon" id="tagAdon">Tag</span>
       <input type="text" class="form-control" ng-disabled="readonly" ng-model="model.tag" aria-describedby="tagAdon">
     </div>
@@ -69,6 +63,16 @@
       <select ng-model="model.stateId" ng-disabled="(!!model.dependantTaskId && !dependantTask.isDone) || readonly"
               ng-options="value.id as value.name for value in states"
               class="form-control" aria--describedby="stateAdon">
+        <option></option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-group col-xs-12">
+      <span class="input-group-addon" id="actionAdon">Action</span>
+      <select ng-model="model.actionId" ng-disabled="readonly"
+              ng-options="value.id as value.name for value in actions"
+              class="form-control" aria--describedby="actionAdon">
         <option></option>
       </select>
     </div>

@@ -15,16 +15,21 @@
           var statesPromise = Noms
             .query({ alias: 'states' })
             .$promise;
+          var actionsPromise = Noms
+            .query({ alias: 'actions' })
+            .$promise;
           var tasksPromise = Noms
             .query({ alias: 'tasks', taskId: scope.model.taskId })
             .$promise;
           $q.all({
             states: statesPromise,
-            tasks: tasksPromise
+            tasks: tasksPromise,
+            actions: actionsPromise
           })
             .then(function (results) {
               scope.states = results.states;
               scope.tasks = results.tasks;
+              scope.actions = results.actions;
               if (scope.model.dependantTaskId) {
                 scope.dependantTask = _.filter(scope.tasks, function (task) {
                   return task.id === scope.model.dependantTaskId;

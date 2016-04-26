@@ -24,7 +24,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
             bool simplicity,
             string title,
             string description,
-            string project,
             string tag,
             string thumbnail,
             DateTime? deadline,
@@ -42,7 +41,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Simplicity = simplicity;
             this.Title = title;
             this.Description = description;
-            this.Project = project;
             this.Thumbnail = thumbnail;
             this.Deadline = deadline;
             this.Duration = duration;
@@ -66,7 +64,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
             bool simplicity,
             string title,
             string description,
-            string project,
             string tag,
             string thumbnail,
             DateTime? deadline,
@@ -83,7 +80,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Simplicity = simplicity;
             this.Title = title;
             this.Description = description;
-            this.Project = project;
             this.Thumbnail = thumbnail;
             this.Deadline = deadline;
             this.Duration = duration;
@@ -119,8 +115,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
         public string Title { get; private set; }
 
         public string Description { get; private set; }
-
-        public string Project { get; private set; }
 
         public string Tag { get; private set; }
 
@@ -263,7 +257,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Property(t => t.GroupId).HasColumnName("GroupId");
             this.Property(t => t.Title).HasColumnName("Title");
             this.Property(t => t.Description).HasColumnName("Description");
-            this.Property(t => t.Project).HasColumnName("Project");
             this.Property(t => t.Tag).HasColumnName("Tag");
             this.Property(t => t.Thumbnail).HasColumnName("Thumbnail");
             this.Property(t => t.Deadline).HasColumnName("Deadline");

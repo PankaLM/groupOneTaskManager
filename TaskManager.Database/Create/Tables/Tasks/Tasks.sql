@@ -16,7 +16,6 @@ CREATE TABLE [dbo].[Tasks] (
 
     Title                 NVARCHAR(MAX)   NOT NULL,
     [Description]         NVARCHAR(MAX)   NULL,
-    Project               NVARCHAR(MAX)   NULL,
     Tag                   NVARCHAR(MAX)   NULL,
     Thumbnail             NVARCHAR(MAX)   NULL,
     Deadline              DATETIME2       NULL,
