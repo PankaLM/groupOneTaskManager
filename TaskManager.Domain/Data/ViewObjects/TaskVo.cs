@@ -17,5 +17,7 @@ namespace TaskManager.Domain.Data.ViewObjects
         public DateTime? Deadline { get; set; }
 
         public int? Duration { get; set; }
+
+        public string Tags { get; set; }
     }
 }

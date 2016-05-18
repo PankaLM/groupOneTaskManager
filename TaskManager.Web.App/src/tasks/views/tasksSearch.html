@@ -17,15 +17,15 @@
           <table st-table="tasks" class="table table-striped">
             <thead>
               <tr>
+                <th colspan="6"><input st-search="" class="form-control" placeholder="search ..." type="text" /></th>
+              </tr>
+              <tr>
                 <th width="1px" ng-if="tasks.length !== 0"></th>
                 <th width="1px" ng-if="tasks.length !== 0"></th>
                 <th st-sort="title">Title</th>
                 <th st-sort="flyScore">Fly score</th>
                 <th st-sort="deadline">Deadline</th>
                 <th st-sort="duration">Duration</th>
-              </tr>
-              <tr>
-                <th colspan="6"><input st-search="" class="form-control" placeholder="search ..." type="text" /></th>
               </tr>
             </thead>
             <tbody>
