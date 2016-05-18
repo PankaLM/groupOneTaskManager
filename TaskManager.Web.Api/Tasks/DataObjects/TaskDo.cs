@@ -43,5 +43,7 @@ namespace TaskManager.Web.Api.Tasks.DataObjects
         public int? ActionId { get; set; }
 
         public int? DependantTaskId { get; set; }
+
+        public bool CreateAppointment { get; set; }
     }
 }

@@ -24,6 +24,10 @@ CREATE TABLE [dbo].[Tasks] (
     StateId               INT             NOT NULL,
     ActionId              INT             NULL,
     DependantTaskId       INT             NULL,
+
+    AppointmentSent       BIT             NOT NULL,
+    CreateAppointment     BIT             NOT NULL,
+
     StartedOn             DATETIME2       NOT NULL,
     CompletedOn           DATETIME2       NULL,
     ModifyDate            DATETIME2       NULL,

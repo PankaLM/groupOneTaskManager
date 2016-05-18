@@ -70,7 +70,8 @@ namespace TaskManager.Web.Api.Controllers
                 taskDo.StateId,
                 taskDo.ActionId,
                 taskDo.DependantTaskId,
-                dependantTask != null ? dependantTask.State : null);
+                dependantTask != null ? dependantTask.State : null,
+                taskDo.CreateAppointment);
 
             this.tasksRepository.Add(task);
 
@@ -108,7 +109,8 @@ namespace TaskManager.Web.Api.Controllers
                 PostponeDeadline = task.PostponeDeadline,
                 StateId = task.StateId,
                 ActionId = task.ActionId,
-                DependantTaskId = task.DependantTaskId
+                DependantTaskId = task.DependantTaskId,
+                CreateAppointment = task.CreateAppointment
             };
         }
 
@@ -139,7 +141,8 @@ namespace TaskManager.Web.Api.Controllers
                 taskDo.StateId,
                 taskDo.ActionId,
                 taskDo.DependantTaskId,
-                dependantTask != null ? dependantTask.State : null);
+                dependantTask != null ? dependantTask.State : null,
+                taskDo.CreateAppointment);
 
             this.unitOfWork.Save();
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using TaskManager.Common;
 using TaskManager.Common.UserContextModels;
@@ -31,7 +30,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             int stateId,
             int? actionId,
             int? dependantTaskId,
-            State dependantTaskState)
+            State dependantTaskState,
+            bool createAppointment)
         {
             this.UserId = user.UserId;
             this.InternalImportance = internalImportance;
@@ -44,6 +44,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Thumbnail = thumbnail;
             this.Deadline = deadline;
             this.Duration = duration;
+
+            this.CreateAppointment = createAppointment;
 
             this.ActionId = actionId;
             
@@ -71,7 +73,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             int stateId,
             int? actionId,
             int? dependantTaskId,
-            State dependantTaskState)
+            State dependantTaskState,
+            bool createAppointment)
         {
             this.InternalImportance = internalImportance;
             this.ExternalImportance = еxternalImportance;
@@ -84,6 +87,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Deadline = deadline;
             this.Duration = duration;
             this.ActionId = actionId;
+
+            this.CreateAppointment = createAppointment;
 
             this.ModifyTag(tag);
             this.ModifyFlyScore();
@@ -147,6 +152,10 @@ namespace TaskManager.Domain.Aggregates.Tasks
         }
 
         public int? DependantTaskId { get; private set; }
+
+        public bool CreateAppointment { get; private set; }
+
+        public bool AppointmentSent { get; private set; }
 
         public DateTime StartedOn { get; private set; }
 
@@ -220,6 +229,11 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Notified = true;
         }
 
+        public void MarkAsSentAppointment()
+        {
+            this.AppointmentSent = true;
+        }
+
         public void ModifyDependantTask(int? dependantTaskId, State dependantTaskState)
         {
             this.DependantTaskId = dependantTaskId;
@@ -265,11 +279,13 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Property(t => t.StateId).HasColumnName("StateId");
             this.Property(t => t.ActionId).HasColumnName("ActionId");
             this.Property(t => t.DependantTaskId).HasColumnName("DependantTaskId");
+            this.Property(t => t.Notified).HasColumnName("Notified");
+            this.Property(t => t.AppointmentSent).HasColumnName("AppointmentSent");
+            this.Property(t => t.CreateAppointment).HasColumnName("CreateAppointment");
             this.Property(t => t.StartedOn).HasColumnName("StartedOn");
             this.Property(t => t.CompletedOn).HasColumnName("CompletedOn");
             this.Property(t => t.ModifyDate).HasColumnName("ModifyDate");
-            this.Property(t => t.Notified).HasColumnName("Notified");
-
+            
             // Relationships
             this.HasOptional(t => t.RecurringTaskGroup)
                 .WithMany()
