@@ -8,6 +8,11 @@
         method: 'GET',
         url: 'api/tasks/new'
       },
+      getMetrics: {
+        method: 'GET',
+        url: 'api/tasks/metrics',
+        isArray: true
+      },
     });
   }]);
 }(angular));

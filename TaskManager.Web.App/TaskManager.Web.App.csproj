@@ -55,9 +55,11 @@
     <Content Include="src\tasks\controllers\tasksNewCtrl.js" />
     <Content Include="src\tasks\controllers\tasksEditCtrl.js" />
     <Content Include="src\common\resources\noms.js" />
+    <Content Include="src\tasks\controllers\tasksMetricsCtrl.js" />
     <Content Include="src\tasks\resources\tasks.js" />
     <Content Include="src\tasks\views\tasksEdit.html" />
     <Content Include="src\tasks\views\tasksNew.html" />
+    <Content Include="src\tasks\views\tasksMetrics.html" />
     <Content Include="src\users\controllers\usersEditCtrl.js" />
     <Content Include="src\users\controllers\registerCtrl.js" />
     <Content Include="src\users\controllers\loginCtrl.js" />

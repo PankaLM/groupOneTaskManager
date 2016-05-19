@@ -1,0 +1,44 @@
+<ng-form name="editTaskForm">
+  <div class="panel">
+    <div class="well-sm panel-body">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="input-group pull-left">
+            <span>Fly score floor</span>
+            <input type="number" class="form-control" min="0" max="100" ng-disabled="readonly" ng-model="flyLimit" ng-change="limitTasks()">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12" style="margin-top: 20px;">
+          <table st-table="tasks" class="table table-striped">
+            <thead>
+              <tr>
+                <th colspan="6"><input st-search="" class="form-control" placeholder="search ..." type="text" /></th>
+              </tr>
+              <tr>
+                <th width="1px" ng-if="tasks.length !== 0"></th>
+                <th st-sort="title">Title</th>
+                <th st-sort="waitingTime.time">Waiting time</th>
+                <th st-sort="executionTime.time">Execution time </th>
+                <th st-sort="completionTime.time">Completion time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat-end ng-repeat="task in tasks">
+                <td ng-if="tasks.length !== 0"><a type="button" ng-click="edit(task.taskId)" class="glyphicon glyphicon-pencil"></a></td>
+                <td>{{task.title}}</td>
+                <td> {{task.waitingTime.time ? 'days: ' + task.waitingTime.days + ', hours: '+ task.waitingTime.hours + ', minutes: ' + task.waitingTime.minutes : 'not started'}} </td>
+                <td>{{task.executionTime.time  ? 'days: ' + task.executionTime.days + ', hours: '+ task.executionTime.hours + ', minutes: ' + task.executionTime.minutes : 'not executed'}}</td>
+                <td>{{task.completionTime.time ? 'days: ' + task.completionTime.days + ', hours: '+ task.completionTime.hours + ', minutes: ' + task.completionTime.minutes : 'not completed'}}</td>
+              </tr>
+              <tr ng-if="tasks.length === 0">
+                <td colspan="4"> You have no tasks </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-form>

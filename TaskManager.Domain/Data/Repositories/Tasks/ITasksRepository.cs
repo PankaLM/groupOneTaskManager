@@ -9,5 +9,7 @@ namespace TaskManager.Domain.Data.Repositories.Tasks
     public interface ITasksRepository : IAggregateRepository<TaskModel>
     {
         IEnumerable<TaskVo> GetTasks(int userId);
+
+        IEnumerable<TaskMetricsVo> GetTaskMetrics(int userId);
     }
 }

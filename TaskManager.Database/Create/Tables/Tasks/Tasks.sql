@@ -28,9 +28,10 @@ CREATE TABLE [dbo].[Tasks] (
     AppointmentSent       BIT             NOT NULL,
     CreateAppointment     BIT             NOT NULL,
 
-    StartedOn             DATETIME2       NOT NULL,
+    StartedOn             DATETIME2       NULL,
     CompletedOn           DATETIME2       NULL,
     ModifyDate            DATETIME2       NULL,
+    CreateDate            DATETIME2       NOT NULL,
     Notified              BIT             NOT NULL,
 
     CONSTRAINT [PK_Tasks]        PRIMARY KEY (TaskId),

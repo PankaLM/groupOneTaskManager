@@ -129,33 +129,34 @@ namespace TaskManager.Web.Api.Jobs
             {
                 try
                 {
-                    DateTime currentDate = DateTime.Now.Date;
-                    var items = (from t in dbContextAccessor.Value.DbContext.Set<TaskModel>()
-                                     .Where(d => d.Deadline.HasValue && !d.Notified && DbFunctions.DiffDays(currentDate, d.Deadline) == 1)
-                                    join u in dbContextAccessor.Value.DbContext.Set<User>()
-                                            .Where(u => !string.IsNullOrEmpty(u.Email)) on t.UserId equals u.UserId
-                                    select new
-                                    {
-                                        Task = t,
-                                        Email = u.Email
-                                    })
-                                .ToList();
-
-                    Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-
-                    foreach (var item in items.Where(i => EmailRegex.Match(i.Email).Success))
-                    {
-                        MailMessage mailMessage = new MailMessage(DefaultSender.Address, item.Email);
-                        mailMessage.Subject = "Pending task";
-                        mailMessage.Body = string.Format("Hi, you have pending task \"{0}\" with deadline \"{1}\".", item.Task.Title, item.Task.Deadline.Value.Date);
-                        mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
-                        mailMessage.IsBodyHtml = true;
-
-                        SmtpClient.Send(mailMessage);
-                        item.Task.MarkAsNotified();
-                    }
                     lock (lockRoot)
                     {
+                        DateTime currentDate = DateTime.Now.Date;
+                        var items = (from t in dbContextAccessor.Value.DbContext.Set<TaskModel>()
+                                         .Where(d => d.Deadline.HasValue && !d.Notified && DbFunctions.DiffDays(currentDate, d.Deadline) == 1)
+                                        join u in dbContextAccessor.Value.DbContext.Set<User>()
+                                                .Where(u => !string.IsNullOrEmpty(u.Email)) on t.UserId equals u.UserId
+                                        select new
+                                        {
+                                            Task = t,
+                                            Email = u.Email
+                                        })
+                                    .ToList();
+
+                        Regex emailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+
+                        foreach (var item in items.Where(i => EmailRegex.Match(i.Email).Success))
+                        {
+                            MailMessage mailMessage = new MailMessage(DefaultSender.Address, item.Email);
+                            mailMessage.Subject = "Pending task";
+                            mailMessage.Body = string.Format("Hi, you have pending task \"{0}\" with deadline \"{1}\".", item.Task.Title, item.Task.Deadline.Value.Date);
+                            mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                            mailMessage.IsBodyHtml = true;
+
+                            SmtpClient.Send(mailMessage);
+                            item.Task.MarkAsNotified();
+                        }
+
                         dbContextAccessor.Value.DbContext.ChangeTracker.DetectChanges();
                         var appointments = (from t in dbContextAccessor.Value.DbContext.Set<TaskModel>()
                                                 .Where(d => !d.AppointmentSent && d.CreateAppointment && d.Deadline.HasValue)

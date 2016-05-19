@@ -1,7 +1,7 @@
 (function (angular, _) {
   'use strict';
 
-  function TasksSearchCtrl(
+  function TasksMetricsCtrl(
       $scope,
       $state,
       Tasks,
@@ -11,22 +11,8 @@
     $scope.tasks = tasks;
     $scope.flyLimit = null;
 
-    $scope.createNew = function () {
-      return $state.transitionTo('tasksNew', {});
-    };
     $scope.edit = function (id) {
       return $state.go('tasksEdit', { id: id });
-    };
-
-    $scope.remove = function (id) {
-      Tasks.remove({ id: id })
-        .$promise
-        .then(function () {
-          _.remove($scope.tasks,
-             function (task) {
-               return task.taskId === id;
-             });
-        });
     };
 
     $scope.limitTasks = function () {
@@ -40,12 +26,12 @@
     };
   }
 
-  TasksSearchCtrl.$inject = [
+  TasksMetricsCtrl.$inject = [
       '$scope',
       '$state',
       'Tasks',
       'tasks'
   ];
   angular.module('taskManager')
-    .controller('TasksSearchCtrl', TasksSearchCtrl);
+    .controller('TasksMetricsCtrl', TasksMetricsCtrl);
 }(angular, _));

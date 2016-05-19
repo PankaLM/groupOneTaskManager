@@ -38,6 +38,18 @@
                 }]
             }
           })
+          .state('metrics', {
+            url: '/metrics',
+            controller: 'TasksMetricsCtrl',
+            templateUrl: 'tasks/views/tasksMetrics.html',
+            resolve: {
+              tasks: [
+                'Tasks',
+                function (Tasks) {
+                  return Tasks.getMetrics().$promise;
+                }]
+            }
+          })
           .state("tasksEdit", {
             url: '/edit/:id',
             controller: 'TasksEditCtrl',

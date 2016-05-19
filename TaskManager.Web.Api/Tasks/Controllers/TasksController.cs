@@ -38,6 +38,13 @@ namespace TaskManager.Web.Api.Controllers
             return this.tasksRepository.GetTasks(this.userContext.UserId);
         }
 
+        [Route("metrics")]
+        [HttpGet]
+        public IEnumerable<TaskMetricsVo> GetTaskМetrics()
+        {
+            return this.tasksRepository.GetTaskMetrics(this.userContext.UserId);
+        }
+
         [Route("new")]
         [HttpGet]
         public TaskDo GetNewTask()

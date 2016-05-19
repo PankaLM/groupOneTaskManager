@@ -56,6 +56,7 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.ModifyFlyScore();
             this.ModifyDependantTask(dependantTaskId, dependantTaskState);
             this.ModifyDate = DateTime.Now;
+            this.CreateDate = DateTime.Now;
             this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true ;
 
         }
@@ -161,6 +162,31 @@ namespace TaskManager.Domain.Aggregates.Tasks
             }
         }
 
+        public TimeSpan? ExecutionTime
+        {
+            get
+            {
+                return this.CompletedOn.HasValue ? (this.CompletedOn.Value - this.StartedOn.Value) : (TimeSpan?)null;
+            }
+        }
+
+
+        public TimeSpan? CompletionTime
+        {
+            get
+            {
+                return this.CompletedOn.HasValue ? (this.CompletedOn.Value - this.CreateDate) : (TimeSpan?)null;
+            }
+        }
+
+        public TimeSpan? WaitingTime
+        {
+            get
+            {
+                return this.StartedOn.HasValue ? (this.StartedOn.Value - this.CreateDate) : (TimeSpan?)null;
+            }
+        }
+
         public int? Duration { get; private set; }
 
         public DateTime? PostponeDeadline { get; private set; }
@@ -191,9 +217,11 @@ namespace TaskManager.Domain.Aggregates.Tasks
 
         public bool AppointmentSent { get; private set; }
 
-        public DateTime StartedOn { get; private set; }
+        public DateTime? StartedOn { get; private set; }
 
         public DateTime? CompletedOn { get; private set; }
+
+        public DateTime? CreateDate { get; private set; }
 
         public DateTime? ModifyDate { get; private set; }
 
@@ -319,7 +347,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Property(t => t.StartedOn).HasColumnName("StartedOn");
             this.Property(t => t.CompletedOn).HasColumnName("CompletedOn");
             this.Property(t => t.ModifyDate).HasColumnName("ModifyDate");
-            
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+
             // Relationships
             this.HasOptional(t => t.RecurringTaskGroup)
                 .WithMany()

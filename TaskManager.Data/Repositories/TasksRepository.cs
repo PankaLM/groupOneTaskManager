@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TaskManager.Common;
@@ -40,6 +41,26 @@ namespace TaskManager.Data.Repositories
                      FlyScore = t.FlyScore,
                      Tags = !string.IsNullOrEmpty(t.Tag) ? string.Join(", ", t.Tag.Split(TaskManagerConstants.Splitter.ToCharArray())) : ""
                  });
+        }
+
+        public IEnumerable<TaskMetricsVo> GetTaskMetrics(int userId)
+        {
+            return this.dbContextAccessor.DbContext.Set<TaskModel>()
+                .Where(t => t.UserId == userId)
+                .OrderByDescending(t => t.FlyScore)
+                .AsEnumerable()
+                .Select(t =>new TaskMetricsVo()
+                {
+                    TaskId = t.TaskId,
+                    Deadline = t.Deadline,
+                    Duration = t.Duration,
+                    Title = t.Title,
+                    FlyScore = t.FlyScore,
+                    Tags = !string.IsNullOrEmpty(t.Tag) ? string.Join(", ", t.Tag.Split(TaskManagerConstants.Splitter.ToCharArray())) : "",
+                    CompletionTime = new EvaluatedTimeVo(t.CompletionTime),
+                    ExecutionTime = new EvaluatedTimeVo(t.ExecutionTime),
+                    WaitingTime = new EvaluatedTimeVo(t.WaitingTime)
+                });
         }
     }
 }
