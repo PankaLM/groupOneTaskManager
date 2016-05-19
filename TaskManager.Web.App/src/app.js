@@ -6,7 +6,8 @@
       'ngResource',
       'localytics.directives',
       'ui.date',
-      'smart-table'
+      'smart-table',
+      'jkuri.timepicker'
     ])
     .config([
       '$stateProvider',

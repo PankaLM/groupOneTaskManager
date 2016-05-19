@@ -32,7 +32,9 @@ namespace TaskManager.Web.Api.Tasks.DataObjects
 
         public string Thumbnail { get; set; }
 
-        public DateTime? Deadline { get; set; }
+        public DateTime? DeadlineDate { get; set; }
+
+        public string DeadlineTime { get; set; }
 
         public int? Duration { get; set; }
 

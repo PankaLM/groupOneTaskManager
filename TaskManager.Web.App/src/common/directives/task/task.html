@@ -27,74 +27,82 @@
       </div>
     </div>
   </div>
+ <div class="row">
+   <label>Title</label>
+   <div class="input-group col-xs-12">
+     <input type="text" class="form-control" ng-disabled="readonly" ng-model="model.title">
+   </div>
+ </div>
   <div class="row">
-    <div class="input-group">
-      <span class="input-group-addon" id="titleAdon">Title</span>
-      <input type="text" class="form-control" ng-disabled="readonly" ng-model="model.title" aria-describedby="titleAdon">
-    </div>
-  </div>
-  <div class="row">
-    <div class="input-group">
-      <span class="input-group-addon" id="descriptionAdon">Description</span>
-      <textarea rows="3" cols="20" class="form-control" ng-disabled="readonly" ng-model="model.description" aria-describedby="descriptionAdon"></textarea>
-    </div>
-  </div>
-  <div class="row">
-    <div class="input-group">
-      <span class="input-group-addon" id="tagAdon">Tag</span>
-      <input type="text" class="form-control" ng-disabled="readonly" ng-model="model.tag" aria-describedby="tagAdon">
-    </div>
-  </div>
-  <div class="row">
-    <div class="input-group">
-      <span class="input-group-addon" id="deadlineAdon">Deadline</span>
-      <input class="form-control" ui-date ng-disabled="readonly" ng-model="model.deadline" aria-describedby="deadlineAdon">
-    </div>
-  </div>
-  <div class="row">
-    <div class="input-group">
-      <span class="input-group-addon" id="durationAdon">Duration</span>
-      <input type="number" class="form-control" ng-disabled="readonly" ng-model="model.duration" aria-describedby="durationAdon">
-    </div>
-  </div>
-  <div class="row">
+    <label>Description</label>
     <div class="input-group col-xs-12">
-      <span class="input-group-addon" id="stateAdon">State</span>
+      <input type="text" class="form-control" ng-disabled="readonly" ng-model="model.description">
+    </div>
+  </div>
+  <div class="row">
+    <label>Tag</label>
+    <div class="input-group col-xs-12">
+      <input type="text" class="form-control" ng-disabled="readonly" ng-model="model.tag">
+    </div>
+  </div>
+  <div class="row" style="z-index: 3; position: relative;">
+    <div style="padding-left:0px" class="col-xs-6 pull-right">
+      <label style="padding-left:0px" class="col-xs-12">Deadline time</label>
+      <div class="input-group">
+        <ng-timepicker ng-model="model.deadlineTime" step="30" theme="red" readonly="readonly" ng-disabled="readonly" style="z-index: 10; position: relative;"></ng-timepicker>
+      </div>
+    </div>
+    <div style="padding-left:0px" class="col-xs-6 pull-left" style="z-index: 0; position: relative;">
+      <label style="padding-left:0px" class="col-xs-12">Duration (hours)</label>
+      <div class="input-group">
+        <input type="number" class="form-control" ng-disabled="readonly" ng-model="model.duration">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <label>Deadline date</label>
+    <div class="input-group col-xs-12">
+      <input type="text" class="form-control" ui-date ng-disabled="readonly" ng-model="model.deadlineDate">
+    </div>
+  </div>
+  <div class="row">
+    <label>State</label>
+    <div class="input-group  col-xs-12">
       <select ng-model="model.stateId" ng-disabled="(!!model.dependantTaskId && !dependantTask.isDone) || readonly"
               ng-options="value.id as value.name for value in states"
-              class="form-control" aria--describedby="stateAdon">
+              class="form-control">
         <option></option>
       </select>
     </div>
   </div>
   <div class="row">
-    <div class="input-group col-xs-12">
-      <span class="input-group-addon" id="actionAdon">Action</span>
+    <label>Action</label>
+    <div class="input-group  col-xs-12">
       <select ng-model="model.actionId" ng-disabled="readonly"
               ng-options="value.id as value.name for value in actions"
-              class="form-control" aria--describedby="actionAdon">
+              class="form-control">
         <option></option>
       </select>
     </div>
   </div>
   <div class="row">
-    <div class="input-group col-xs-12">
-      <span class="input-group-addon" id="recommendationAddon">Recommendation</span>
-      <input type="text" class="form-control" ng-disabled="true" ng-model="model.recomendation" aria-describedby="recommendationAddon">
+    <label>Recommendation</label>
+    <div class="input-group  col-xs-12">
+      <input type="text" class="form-control" ng-disabled="true" ng-model="model.recomendation">
     </div>
   </div>
   <div class="row">
-    <div class="input-group col-xs-12">
-      <span class="input-group-addon" id="dependantTaskAdon">Dependant task</span>
+    <label>Dependant task</label>
+    <div class="input-group  col-xs-12">
       <select ng-model="model.dependantTaskId"
-              ng-options="value.id as value.name for value in tasks"
-              class="form-control" aria--describedby="dependantTaskAdon" ng-disabled="readonly">
-        <option></option>
+      ng-options="value.id as value.name for value in tasks"
+      class="form-control" ng-disabled="readonly">
+      <option></option>
       </select>
     </div>
   </div>
   <div class="row">
-    <div class="form-group">
+    <div class="form-group pull-left">
       <label class="control-label">Send an appointment to my email</label>
       <input type="checkbox" class="form-control input-sm" ng-disabled="readonly" ng-model="model.createAppointment">
     </div>

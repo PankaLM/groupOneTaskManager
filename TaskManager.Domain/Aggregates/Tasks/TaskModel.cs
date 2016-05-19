@@ -25,7 +25,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             string description,
             string tag,
             string thumbnail,
-            DateTime? deadline,
+            DateTime? deadlineDate,
+            string deadlineTime,
             int? duration,
             int stateId,
             int? actionId,
@@ -42,7 +43,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Title = title;
             this.Description = description;
             this.Thumbnail = thumbnail;
-            this.Deadline = deadline;
+
+            this.ModifyDeadline(deadlineDate: deadlineDate, deadlineTime: deadlineTime);
             this.Duration = duration;
 
             this.CreateAppointment = createAppointment;
@@ -58,6 +60,21 @@ namespace TaskManager.Domain.Aggregates.Tasks
 
         }
 
+        private void ModifyDeadline(
+            DateTime? deadlineDate,
+            string deadlineTime)
+        {
+            this.Deadline = deadlineDate;
+
+            if (!string.IsNullOrEmpty(deadlineTime) && this.Deadline.HasValue)
+            {
+                var timeParts = deadlineTime.Split(':');
+                this.Deadline = this.Deadline.Value.Date
+                    .AddHours(int.Parse(timeParts[0].Trim()))
+                    .AddMinutes(int.Parse(timeParts[1].Trim()));
+            }
+        }
+
         public void Modify(
             bool internalImportance,
             bool еxternalImportance,
@@ -68,7 +85,8 @@ namespace TaskManager.Domain.Aggregates.Tasks
             string description,
             string tag,
             string thumbnail,
-            DateTime? deadline,
+            DateTime? deadlineDate,
+            string deadlineTime,
             int? duration,
             int stateId,
             int? actionId,
@@ -84,7 +102,7 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Title = title;
             this.Description = description;
             this.Thumbnail = thumbnail;
-            this.Deadline = deadline;
+            this.ModifyDeadline(deadlineDate: deadlineDate, deadlineTime: deadlineTime);
             this.Duration = duration;
             this.ActionId = actionId;
 
@@ -126,6 +144,22 @@ namespace TaskManager.Domain.Aggregates.Tasks
         public string Thumbnail { get; private set; }
 
         public DateTime? Deadline { get; private set; }
+
+        public string DeadlineTime
+        {
+            get
+            {
+                return this.Deadline.HasValue ? string.Format("{0:D2}:{1:D2}", this.Deadline.Value.Hour, this.Deadline.Value.Minute) : "";
+            }
+        }
+
+        public DateTime? DeadlineDate
+        {
+            get
+            {
+                return this.Deadline.HasValue ? this.Deadline.Value.Date : (DateTime?)null;
+            }
+        }
 
         public int? Duration { get; private set; }
 

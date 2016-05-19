@@ -6,3 +6,8 @@
 {
   color: #b94a48;
 }
+
+.ng-timepicker.red > table > tbody > tr > td.act:hover {
+	background: #ff5c5b;
+	color: #fff;
+}

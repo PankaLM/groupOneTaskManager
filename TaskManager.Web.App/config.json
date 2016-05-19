@@ -20,12 +20,14 @@
     "src/bower_components/angular-ui-router/release/angular-ui-router.js",
     "src/bower_components/angular-resource/angular-resource.js",
     "src/bower_components/lodash/dist/lodash.js",
-    "src/bower_components/angular-smart-table/dist/smart-table.min.js"
+    "src/bower_components/angular-smart-table/dist/smart-table.min.js",
+    "src/bower_components/ngTimepicker/src/js/ngTimepicker.js"
   ],
   "css": [
     "src/bower_components/bootstrap/dist/css/bootstrap.css",
-    "src/bower_components/font-awesome/css/font-awesome.css",
+    "src/bower_components/font-awesome/css/font-awesome.min.css",
     "src/bower_components/jquery-ui/themes/smoothness/jquery-ui.css",
+    "src/bower_components/ngTimepicker/src/css/ngTimepicker.css",
     "src/css/**/*.css"
   ],
   "assets": {
