@@ -50,6 +50,11 @@
                 }]
             }
           })
+          .state('inviteFriend', {
+            url: '/inviteFriend',
+            controller: 'InviteFriendCtrl',
+            templateUrl: 'users/views/inviteFriend.html'
+          })
           .state("tasksEdit", {
             url: '/edit/:id',
             controller: 'TasksEditCtrl',

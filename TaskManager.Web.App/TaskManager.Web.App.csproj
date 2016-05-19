@@ -60,12 +60,14 @@
     <Content Include="src\tasks\views\tasksEdit.html" />
     <Content Include="src\tasks\views\tasksNew.html" />
     <Content Include="src\tasks\views\tasksMetrics.html" />
+    <Content Include="src\users\controllers\inviteFriendCtrl.js" />
     <Content Include="src\users\controllers\usersEditCtrl.js" />
     <Content Include="src\users\controllers\registerCtrl.js" />
     <Content Include="src\users\controllers\loginCtrl.js" />
     <Content Include="src\users\resources\users.js" />
     <Content Include="src\users\services\sessionTokenStore.js" />
     <Content Include="src\users\services\authenticationService.js" />
+    <Content Include="src\users\views\inviteFriend.html" />
     <Content Include="src\users\views\usersEdit.html" />
     <Content Include="src\users\views\register.html" />
     <Content Include="src\users\views\login.html" />
@@ -73,7 +75,6 @@
     <Content Include="gulpfile.js" />
     <Content Include="src\app.js" />
     <Content Include="src\css\stylesheets.css" />
-    <Content Include="src\favicon.ico" />
     <Content Include="index.html" />
     <Content Include="src\tasks\controllers\tasksSearchCtrl.js" />
     <Content Include="src\tasks\views\tasksSearch.html" />

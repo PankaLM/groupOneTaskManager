@@ -6,8 +6,8 @@
       $state,
       authenticationService
     ) {
-        $scope.invalidUsernameAndPassword = false;
-        $scope.submitting = false;
+    $scope.invalidUsernameAndPassword = false;
+    $scope.submitting = false;
 
     $scope.login = function (username, password) {
       return authenticationService

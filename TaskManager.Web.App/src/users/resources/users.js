@@ -8,6 +8,10 @@
           method: 'POST',
           url: 'api/user/changePassword'
         },
+        sendInvitation: {
+          method: 'POST',
+          url: 'api/user/sendInvitation'
+        },
         checkDuplicateUsers: {
           method: 'GET',
           url: 'api/user/duplicateUsers',
