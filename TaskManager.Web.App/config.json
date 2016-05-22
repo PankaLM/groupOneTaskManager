@@ -16,6 +16,7 @@
     "src/bower_components/chosen/chosen.jquery.js",
     "src/bower_components/bootstrap/dist/js/bootstrap.min.js",
     "src/bower_components/angular-ui-date/dist/date.js",
+    "src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "src/bower_components/angular-chosen-localytics/dist/angular-chosen.min.js",
     "src/bower_components/angular-ui-router/release/angular-ui-router.js",
     "src/bower_components/angular-resource/angular-resource.js",

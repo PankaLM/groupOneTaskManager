@@ -6,6 +6,7 @@
       'ngResource',
       'localytics.directives',
       'ui.date',
+      'ui.bootstrap',
       'smart-table',
       'jkuri.timepicker'
     ])

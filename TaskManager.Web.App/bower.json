@@ -12,7 +12,8 @@
     "angular-chosen-localytics": "~1.4.0",
     "angular-ui-date": "~1.0.0",
     "angular-smart-table": "~2.1.8",
-    "ngTimepicker": "PankaLM/ngTimepicker#81f609453ae63b4a562946e58e99e83535b11b1f"
+    "ngTimepicker": "PankaLM/ngTimepicker#81f609453ae63b4a562946e58e99e83535b11b1f",
+    "angular-bootstrap": "^1.3.2"
   },
   "resolutions": {
     "angular": "^1.4.9"
