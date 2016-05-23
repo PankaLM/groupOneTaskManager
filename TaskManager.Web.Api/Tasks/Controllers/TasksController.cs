@@ -188,5 +188,19 @@ namespace TaskManager.Web.Api.Controllers
 
             this.unitOfWork.Save();
         }
+
+        [Route("overloading")]
+        [HttpGet]
+        public object CheckForOverloading()
+        {
+            var date = this.tasksRepository.GetFirstOverloadedDay(this.userContext.UserId);
+            
+            return new
+            {
+                hasOverloadedDay = date.HasValue,
+                overloadedDay = date,
+            };
+        }
+
     }
 }

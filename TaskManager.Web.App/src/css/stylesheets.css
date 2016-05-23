@@ -1,5 +1,4 @@
-.container > div[ui-view] 
-{
+.padding-top-50 {
   padding-top: 50px;
 }
 .has-error

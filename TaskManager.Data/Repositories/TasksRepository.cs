@@ -29,7 +29,7 @@ namespace TaskManager.Data.Repositories
         public IEnumerable<TaskVo> GetTasks(int userId)
         {
             return this.dbContextAccessor.DbContext.Set<TaskModel>()
-                .Where(t => t.UserId == userId)
+                .Where(t => t.UserId == userId && t.StateId != State.Done.StateId)
                 .OrderByDescending(t => t.FlyScore)
                 .AsEnumerable()
                 .Select(t => new TaskVo()
@@ -61,6 +61,19 @@ namespace TaskManager.Data.Repositories
                     ExecutionTime = new EvaluatedTimeVo(t.ExecutionTime),
                     WaitingTime = new EvaluatedTimeVo(t.WaitingTime)
                 });
+        }
+
+        public DateTime? GetFirstOverloadedDay(int userId)
+        {
+            var day = this.dbContextAccessor.DbContext.Set<TaskModel>()
+                .Where(t => t.UserId == userId && t.Deadline.HasValue && t.StateId != State.Done.StateId && t.Deadline >= DateTime.Now)
+                .GroupBy(t => t.Deadline.Value)
+                .Where(t => t.Count() >= 5)
+                .OrderBy(d => d.Key)
+                .Select(d => d.Key)
+                .FirstOrDefault();
+
+            return day.Equals(DateTime.MinValue) ? (DateTime?)null : day;
         }
     }
 }

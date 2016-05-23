@@ -13,6 +13,10 @@
         url: 'api/tasks/metrics',
         isArray: true
       },
+      checkForOverloading: {
+        method: 'GET',
+        url: 'api/tasks/overloading'
+      }
     });
   }]);
 }(angular));

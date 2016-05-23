@@ -114,13 +114,32 @@
             $state.go('login');
           });
         }
-    ]).controller('AppCtrl', ['$rootScope', '$scope', 'authenticationService', '$state',
-      function ($rootScope, $scope, authenticationService, $state) {
+    ]).controller('AppCtrl', [
+      '$rootScope',
+      '$scope',
+      'authenticationService',
+      '$state', 
+      'Tasks',
+      function ($rootScope, $scope, authenticationService, $state, Tasks) {
         $scope.logout = function () {
           authenticationService.signOut();
         };
+        $scope.toggleAlert = function () {
+          $scope.showAlert = !$scope.showAlert;
+        };
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
           $scope.isLoggedIn = authenticationService.isLoggedIn();
+          if ($scope.isLoggedIn) {
+              Tasks.checkForOverloading().$promise.then(function (res) {
+                if (res.hasOverloadedDay) {
+                  $scope.alertForOverloading = true;
+                  $scope.overloadedDate = res.overloadedDay;
+                } else {
+                  $scope.alertForOverloading = false;
+                }
+              });
+          }
+          $scope.alertForOverloading = false;
         });
         
     }]);
