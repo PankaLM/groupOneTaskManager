@@ -52,12 +52,14 @@
     <Content Include="src\common\directives\user\user.js" />
     <Content Include="src\settings\controllers\settingsEditCtrl.js" />
     <Content Include="src\settings\views\settingsEdit.html" />
+    <Content Include="src\tasks\controllers\tasksStatisticsCtrl.js" />
     <Content Include="src\tasks\controllers\tasksNewCtrl.js" />
     <Content Include="src\tasks\controllers\tasksEditCtrl.js" />
     <Content Include="src\common\resources\noms.js" />
     <Content Include="src\tasks\controllers\tasksMetricsCtrl.js" />
     <Content Include="src\tasks\resources\tasks.js" />
     <Content Include="src\tasks\views\tasksEdit.html" />
+    <Content Include="src\tasks\views\tasksStatistics.html" />
     <Content Include="src\tasks\views\tasksNew.html" />
     <Content Include="src\tasks\views\tasksMetrics.html" />
     <Content Include="src\users\controllers\inviteFriendCtrl.js" />

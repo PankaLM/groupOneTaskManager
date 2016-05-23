@@ -10,25 +10,30 @@ using TaskManager.Domain.Data.Repositories.Tasks;
 using TaskManager.Domain.Data.ViewObjects;
 using TaskManager.Web.Api.Tasks.DataObjects;
 using TaskManager.Web.Api.Utils;
+using System.Linq;
+using System.Data.Entity;
 
 namespace TaskManager.Web.Api.Controllers
 {
-  //  [Authorize]
+    [Authorize]
     [RoutePrefix("api/tasks")]
     public class TasksController : ApiController
     {
         private UserContext userContext;
         private IUnitOfWork unitOfWork;
         private ITasksRepository tasksRepository;
+        private IDbContextAccessor dbContextAccessor;
 
         public TasksController(
             UserContext userContext,
             IUnitOfWork unitOfWork,
-            ITasksRepository tasksRepository)
+            ITasksRepository tasksRepository,
+            IDbContextAccessor dbContextAccessor)
         {
             this.userContext = userContext;
             this.unitOfWork = unitOfWork;
             this.tasksRepository = tasksRepository;
+            this.dbContextAccessor = dbContextAccessor;
         }
 
         [Route("")]
@@ -199,6 +204,51 @@ namespace TaskManager.Web.Api.Controllers
             {
                 hasOverloadedDay = date.HasValue,
                 overloadedDay = date,
+            };
+        }
+
+        [Route("statistics")]
+        [HttpGet]
+        public TaskStatisticsVo GetStatistics()
+        {
+            var tasks = this.dbContextAccessor.DbContext.Set<TaskModel>()
+                .Where(u => u.UserId == this.userContext.UserId);
+
+            var actionsDic = tasks
+                .Where(t => t.ActionId.HasValue)
+                .Select(s => s.ActionId.Value)
+                .GroupBy(s => s)
+                .AsEnumerable()
+                .ToDictionary(s => s.Key, s => s.Count());
+
+            ActionsCountVo actionsCount = new ActionsCountVo()
+            {
+                Transfered = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.Transfer.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.Transfer.ActionId] : 0,
+                Trashed = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.Trash.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.Trash.ActionId] : 0,
+                Clarified = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.Clarify.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.Clarify.ActionId] : 0,
+                Defered = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.Defer.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.Defer.ActionId] : 0,
+                Delegated = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.Delegate.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.Delegate.ActionId] : 0,
+                Executed = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.Execute.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.Execute.ActionId] : 0,
+                FollowedUp = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.FollowUp.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.FollowUp.ActionId] : 0,
+                Scheduled = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.Schedule.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.Schedule.ActionId] : 0,
+                Simplified = actionsDic.ContainsKey(Domain.Aggregates.Tasks.Action.Simplify.ActionId) ? actionsDic[Domain.Aggregates.Tasks.Action.Simplify.ActionId] : 0
+            };
+
+            var allWaitingTimes = tasks.Where(s => s.StartedOn.HasValue).AsEnumerable().Select(t => t.WaitingTime);
+            var allTasksThisMonth = tasks.Where(t => t.Deadline.HasValue && t.Deadline.Value.Month == DateTime.Now.Month);
+            var percentageCompletedTasksCurrentMonth = (100 * allTasksThisMonth.Where(t => t.CompletedOn.HasValue && DbFunctions.DiffDays(t.CompletedOn.Value, t.Deadline.Value) >= 0).Count()) / allTasksThisMonth.Count();
+            var allTasksToday = tasks.Where(t => t.Deadline.HasValue && DbFunctions.DiffDays(t.Deadline.Value, DateTime.Now) == 0);
+            var percentageCompletedTasksToday = (100 * allTasksToday.Where(t => t.CompletedOn.HasValue && DbFunctions.DiffDays(t.CompletedOn.Value, t.Deadline.Value) >= 0).Count()) / allTasksToday.Count();
+            var percentageIncompletedTasksToday = (100 * allTasksToday.Where(t => !t.CompletedOn.HasValue).Count()) / allTasksToday.Count();
+
+            return new TaskStatisticsVo()
+            {
+                ActionsCount = actionsCount,
+                AverageWaitingTime = new EvaluatedTimeVo(TimeSpan.FromMilliseconds(allWaitingTimes.Select(ts => ts.Value.TotalMilliseconds).Average())),
+                CompletedBeforeDeadlineCount = tasks.Where(t => t.CompletedOn.HasValue && t.Deadline.HasValue && t.CompletedOn <= t.Deadline).Count(),
+                PercentageCompletedTasksCurrentMonth = percentageCompletedTasksCurrentMonth,
+                PercentageCompletedTasksToday = percentageCompletedTasksToday,
+                PercentageIncompletedTasksForToday = percentageIncompletedTasksToday
             };
         }
 

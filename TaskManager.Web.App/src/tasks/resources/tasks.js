@@ -16,7 +16,11 @@
       checkForOverloading: {
         method: 'GET',
         url: 'api/tasks/overloading'
-      }
+      },
+      getStatistics: {
+        method: 'GET',
+        url: 'api/tasks/statistics'
+      },
     });
   }]);
 }(angular));

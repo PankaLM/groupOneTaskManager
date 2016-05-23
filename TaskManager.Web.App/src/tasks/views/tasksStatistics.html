@@ -1,0 +1,58 @@
+<ng-form name="editTaskForm">
+  <div class="panel">
+    <div class="well-sm panel-body">
+      <div class="row">
+        <div class="col-xs-6 pull-left" style="margin-top: 20px;">
+          <ul>
+            <li>
+              Executed - {{statistics.actionsCount.executed}}
+            </li>
+            <li>
+              Simplified - {{statistics.actionsCount.simplified}}
+            </li>
+            <li>
+              Clarified - {{statistics.actionsCount.clarified}}
+            </li>
+            <li>
+              Followed up - {{statistics.actionsCount.followedUp}}
+            </li>
+            <li>
+              Delegated - {{statistics.actionsCount.delegated}}
+            </li>
+            <li>
+              Defered - {{statistics.actionsCount.defered}}
+            </li>
+            <li>
+              Scheduled - {{statistics.actionsCount.scheduled}}
+            </li>
+            <li>
+              Transfered - {{statistics.actionsCount.transfered}}
+            </li>
+            <li>
+              Trashed - {{statistics.actionsCount.trashed}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-12 pull-left" style="margin-top: 20px;">
+          <ul>
+            <li>
+              Completed before deadline - {{statistics.completedBeforeDeadlineCount}}
+            </li>
+            <li>
+              Average waiting time - {{'days: ' + statistics.averageWaitingTime.days + ', hours: ' + statistics.averageWaitingTime.hours + ', mins: ' + statistics.averageWaitingTime.minutes}}
+            </li>
+            <li>
+              Completed tasks today (%) - {{statistics.percentageCompletedTasksToday}}
+            </li>
+            <li>
+              Completed tasks this month (%) - {{statistics.percentageCompletedTasksCurrentMonth}}
+            </li>
+            <li>
+              Incompleted tasks today (%) - {{statistics.percentageIncompletedTasksForToday}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-form>

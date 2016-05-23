@@ -166,7 +166,7 @@ namespace TaskManager.Domain.Aggregates.Tasks
         {
             get
             {
-                return this.CompletedOn.HasValue ? (this.CompletedOn.Value - this.StartedOn.Value) : (TimeSpan?)null;
+                return this.CompletedOn.HasValue && this.StartedOn.HasValue ? (this.CompletedOn.Value - this.StartedOn.Value) : (TimeSpan?)null;
             }
         }
 

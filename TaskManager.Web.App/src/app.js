@@ -51,6 +51,18 @@
                 }]
             }
           })
+          .state('statistics', {
+            url: '/statistics',
+            controller: 'TasksStatisticsCtrl',
+            templateUrl: 'tasks/views/tasksStatistics.html',
+            resolve: {
+              statistics: [
+                'Tasks',
+                function (Tasks) {
+                  return Tasks.getStatistics().$promise;
+                }]
+            }
+          })
           .state('inviteFriend', {
             url: '/inviteFriend',
             controller: 'InviteFriendCtrl',

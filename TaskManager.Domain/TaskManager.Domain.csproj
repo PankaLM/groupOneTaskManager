@@ -102,6 +102,8 @@
     <Compile Include="Data\Repositories\Tasks\ITasksRepository.cs" />
     <Compile Include="Data\Repositories\Users\IUsersRepository.cs" />
     <Compile Include="Data\ViewObjects\EvaluatedTimeVo.cs" />
+    <Compile Include="Data\ViewObjects\ActionsCountVo.cs" />
+    <Compile Include="Data\ViewObjects\TasksStatisticsVo.cs" />
     <Compile Include="Data\ViewObjects\TaskValueVo.cs" />
     <Compile Include="Data\ViewObjects\TaskMetricsVo.cs" />
     <Compile Include="Data\ViewObjects\ValueVo.cs" />
