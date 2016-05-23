@@ -47,5 +47,8 @@ namespace TaskManager.Web.Api.Tasks.DataObjects
         public int? DependantTaskId { get; set; }
 
         public bool CreateAppointment { get; set; }
+
+        public DateTime? LateStart { get; set; }
+
     }
 }

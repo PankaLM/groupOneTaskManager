@@ -124,7 +124,8 @@ namespace TaskManager.Web.Api.Controllers
                 StateId = task.StateId,
                 ActionId = task.ActionId,
                 DependantTaskId = task.DependantTaskId,
-                CreateAppointment = task.CreateAppointment
+                CreateAppointment = task.CreateAppointment,
+                LateStart = task.Deadline.HasValue ? new DateTime((TimeSpan.FromTicks(task.Deadline.Value.Ticks) - TimeSpan.FromHours(task.Duration ?? 0)).Ticks) : (DateTime?)null
             };
         }
 

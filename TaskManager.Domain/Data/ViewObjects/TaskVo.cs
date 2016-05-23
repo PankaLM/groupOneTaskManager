@@ -19,5 +19,7 @@ namespace TaskManager.Domain.Data.ViewObjects
         public int? Duration { get; set; }
 
         public string Tags { get; set; }
+
+        public bool TooLate { get; set; }
     }
 }

@@ -65,6 +65,12 @@
       <input type="text" class="form-control" ui-date ng-disabled="readonly" ng-model="model.deadlineDate">
     </div>
   </div>
+  <div class="row" ng-if="model.taskId && model.deadlineDate">
+    <label>Late start date</label>
+    <div class="input-group col-xs-12">
+      <input type="text" class="form-control" ng-disabled="true" ng-model="model.lateStart">
+    </div>
+  </div>
   <div class="row">
     <label>State</label>
     <div class="input-group  col-xs-12">

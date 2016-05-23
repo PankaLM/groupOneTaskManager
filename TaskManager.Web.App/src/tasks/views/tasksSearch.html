@@ -50,7 +50,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat-end ng-repeat="task in tasks">
+              <tr ng-repeat-end ng-repeat="task in tasks" ng-class="{'red' : task.tooLate}">
                 <td ng-if="tasks.length !== 0"><a type="button" ng-click="edit(task.taskId)" class="glyphicon glyphicon-pencil"></a></td>
                 <td ng-if="tasks.length !== 0"><a type="button" ng-click="remove(task.taskId)" class="glyphicon glyphicon-remove"></a></td>
                 <td>{{task.title}}</td>
