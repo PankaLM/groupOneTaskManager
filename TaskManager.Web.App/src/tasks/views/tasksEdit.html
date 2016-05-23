@@ -10,6 +10,11 @@
     </div>
 
     <div class="well-sm panel-body">
+      <div class="row">
+        <div class="col-xs-12" style="margin-top:10px">
+          <uib-progressbar class="progress active" value="motionLevel" type="{{scaleStyle}}"></uib-progressbar>
+        </div>
+      </div>
       <task ng-model="task" name="taskFom" readonly="!editMode"></task>
     </div>
   </div>

@@ -11,24 +11,6 @@
     $scope.tasks = tasks;
     $scope.flyLimit = null;
 
-    $scope.motionLevel = null;
-    $scope.scaleStyle = null;
-
-    //TODO: Link to backend.
-    $scope.updateScale = function (motionLevel) {
-      var type = null;
-      if (motionLevel < 33) {
-        type = 'success';
-      } else if (motionLevel < 66) {
-        type = 'warning';
-      } else {
-        type = 'danger';
-      }
-      $scope.motionLevel = motionLevel;
-      $scope.scaleStyle = type;
-    };
-    $scope.updateScale(15);
-
     $scope.createNew = function () {
       return $state.transitionTo('tasksNew', {});
     };
