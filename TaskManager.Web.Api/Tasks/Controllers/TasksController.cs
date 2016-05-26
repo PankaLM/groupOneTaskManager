@@ -237,10 +237,10 @@ namespace TaskManager.Web.Api.Controllers
 
             var allWaitingTimes = tasks.Where(s => s.StartedOn.HasValue).AsEnumerable().Select(t => t.WaitingTime);
             var allTasksThisMonth = tasks.Where(t => t.Deadline.HasValue && t.Deadline.Value.Month == DateTime.Now.Month);
-            var percentageCompletedTasksCurrentMonth = (100 * allTasksThisMonth.Where(t => t.CompletedOn.HasValue && DbFunctions.DiffDays(t.CompletedOn.Value, t.Deadline.Value) >= 0).Count()) / allTasksThisMonth.Count();
+            var percentageCompletedTasksCurrentMonth = allTasksThisMonth.Count() > 0 ? (100 * allTasksThisMonth.Where(t => t.CompletedOn.HasValue && DbFunctions.DiffDays(t.CompletedOn.Value, t.Deadline.Value) >= 0).Count()) / allTasksThisMonth.Count() : 0;
             var allTasksToday = tasks.Where(t => t.Deadline.HasValue && DbFunctions.DiffDays(t.Deadline.Value, DateTime.Now) == 0);
-            var percentageCompletedTasksToday = (100 * allTasksToday.Where(t => t.CompletedOn.HasValue && DbFunctions.DiffDays(t.CompletedOn.Value, t.Deadline.Value) >= 0).Count()) / allTasksToday.Count();
-            var percentageIncompletedTasksToday = (100 * allTasksToday.Where(t => !t.CompletedOn.HasValue).Count()) / allTasksToday.Count();
+            var percentageCompletedTasksToday = allTasksToday.Count() > 0 ? (100 * allTasksToday.Where(t => t.CompletedOn.HasValue && DbFunctions.DiffDays(t.CompletedOn.Value, t.Deadline.Value) >= 0).Count()) / allTasksToday.Count() : 0;
+            var percentageIncompletedTasksToday = allTasksToday.Count() > 0 ? (100 * allTasksToday.Where(t => !t.CompletedOn.HasValue).Count()) / allTasksToday.Count() : 0;
 
             return new TaskStatisticsVo()
             {
