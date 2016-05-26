@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -103,7 +104,7 @@ namespace TaskManager.Web.Api.Jobs
 
         private static object lockRoot = new object();
 
-        private string ConstructCalendarAppointment(DateTime start, string subject, string description)
+        private string ConstructCalendarAppointment(DateTime start, string subject, string description, int duration)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("BEGIN:VCALENDAR\n");
@@ -111,9 +112,9 @@ namespace TaskManager.Web.Api.Jobs
             sb.Append("PRODID:TaskManager\n");
             sb.Append("BEGIN:VEVENT\n");
             sb.AppendFormat("ORGANIZER:MAILTO:{0}\n", DefaultSender);
-            sb.AppendFormat("DTSTAMP:{0}\n", DateTime.Now.ToString(@"yyyyMMdd\THHmmss\Z"));
-            sb.AppendFormat("DTSTART:{0}\n", start.ToString(@"yyyyMMdd\T000000\Z"));
-            sb.AppendFormat("DTEND: {0} \n", start.AddDays(1).ToString(@"yyyyMMdd\T000000\Z"));
+            sb.AppendFormat("DTSTAMP:{0}\n", DateTime.Now.ToString(@"yyyyMMdd\THHmmss\0"));
+            sb.AppendFormat("DTSTART:{0}\n", new DateTime((TimeSpan.FromTicks(start.Ticks) - TimeSpan.FromHours(duration)).Ticks).ToString(@"yyyyMMdd\THHmmss\0"));
+            sb.AppendFormat("DTEND: {0} \n", start.AddDays(1).ToString(@"yyyyMMdd\THHmmss\0"));
             sb.Append("CATEGORIES:MEETING\n");
             sb.Append("CLASS:PUBLIC\n");
             sb.AppendFormat("SUMMARY:{0}\n", subject);
@@ -149,7 +150,7 @@ namespace TaskManager.Web.Api.Jobs
                         {
                             MailMessage mailMessage = new MailMessage(DefaultSender.Address, item.Email);
                             mailMessage.Subject = "Pending task";
-                            mailMessage.Body = string.Format("Hi, you have pending task \"{0}\" with deadline \"{1}\".", item.Task.Title, item.Task.Deadline.Value.Date);
+                            mailMessage.Body = string.Format("Hi, you have pending task \"{0}\" with deadline \"{1}\".", item.Task.Title, item.Task.Deadline.Value);
                             mailMessage.BodyEncoding = System.Text.Encoding.UTF8;
                             mailMessage.IsBodyHtml = true;
 
@@ -172,7 +173,7 @@ namespace TaskManager.Web.Api.Jobs
                         foreach (var item in appointments.Where(i => EmailRegex.Match(i.Email).Success))
                         {
                             MailMessage msg = new MailMessage(DefaultSender.Address, item.Email);
-                            string appointmentData = ConstructCalendarAppointment(item.Task.Deadline.Value, item.Task.Title, item.Task.Description);
+                            string appointmentData = ConstructCalendarAppointment(item.Task.Deadline.Value, item.Task.Title, item.Task.Description, item.Task.Duration ?? 24);
                             byte[] data = Encoding.UTF8.GetBytes(appointmentData);
                             AlternateView appointment = new AlternateView(new MemoryStream(data), "text/calendar");
                             appointment.ContentType.Parameters.Add("method", "REQUEST");
