@@ -12,7 +12,9 @@
     <div class="well-sm panel-body">
       <div class="row" ng-if="!task.isRecurringGroup">
         <div class="col-xs-12" style="margin-top:10px">
-          <uib-progressbar class="progress active" value="motionLevel" type="{{scaleStyle}}"></uib-progressbar>
+          <uib-progressbar style="margin-bottom: 0px" class="progress active" value="motionLevel" type="{{scaleStyle}}"></uib-progressbar>
+          <span class="pull-left">slow</span>
+          <span class="pull-right">fast</span>
         </div>
       </div>
       <task ng-model="task" readonly="!editMode"></task>
