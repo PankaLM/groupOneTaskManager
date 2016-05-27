@@ -43,6 +43,13 @@ namespace TaskManager.Web.Api.Controllers
             return this.tasksRepository.GetTasks(this.userContext.UserId);
         }
 
+        [Route("recurringTaskGroups")]
+        [HttpGet]
+        public IEnumerable<RecurringTaskGroupTaskVo> GetRecurringTaskGroups()
+        {
+            return this.tasksRepository.GetRecurringTaskGroups(this.userContext.UserId);
+        }
+        
         [Route("metrics")]
         [HttpGet]
         public IEnumerable<TaskMetricsVo> GetTaskМetrics()
@@ -84,7 +91,10 @@ namespace TaskManager.Web.Api.Controllers
                 taskDo.ActionId,
                 taskDo.DependantTaskId,
                 dependantTask != null ? dependantTask.State : null,
-                taskDo.CreateAppointment);
+                taskDo.CreateAppointment,
+                taskDo.IsRecurringGroup,
+                taskDo.RecurringGroupIntervalInDays,
+                taskDo.RecurringGroupStartDate);
 
             this.tasksRepository.Add(task);
 
@@ -120,12 +130,14 @@ namespace TaskManager.Web.Api.Controllers
                 DeadlineDate = task.Deadline,
                 DeadlineTime = task.DeadlineTime,
                 Duration = task.Duration,
-                PostponeDeadline = task.PostponeDeadline,
                 StateId = task.StateId,
                 ActionId = task.ActionId,
                 DependantTaskId = task.DependantTaskId,
                 CreateAppointment = task.CreateAppointment,
-                LateStart = task.LateStart.HasValue ? task.LateStart.Value.ToString(@"dd/MM/yyyy HH:mm") : null
+                LateStart = task.LateStart.HasValue ? task.LateStart.Value.ToString(@"dd/MM/yyyy HH:mm") : null,
+                IsRecurringGroup = task.IsRecurringGroup,
+                RecurringGroupIntervalInDays = task.RecurringGroupInterval,
+                RecurringGroupStartDate = task.RecurringGroupStartDate
             };
         }
 
@@ -158,7 +170,10 @@ namespace TaskManager.Web.Api.Controllers
                 taskDo.ActionId,
                 taskDo.DependantTaskId,
                 dependantTask != null ? dependantTask.State : null,
-                taskDo.CreateAppointment);
+                taskDo.CreateAppointment,
+                taskDo.IsRecurringGroup,
+                taskDo.RecurringGroupIntervalInDays,
+                taskDo.RecurringGroupStartDate);
 
             this.unitOfWork.Save();
         }
@@ -197,7 +212,9 @@ namespace TaskManager.Web.Api.Controllers
         public TaskStatisticsVo GetStatistics()
         {
             var tasks = this.dbContextAccessor.DbContext.Set<TaskModel>()
-                .Where(u => u.UserId == this.userContext.UserId);
+                .Where(u => u.UserId == this.userContext.UserId && 
+                    !u.IsRecurringGroup && 
+                    (!u.GroupId.HasValue || DbFunctions.DiffDays(u.Deadline, DateTime.Now) >= 0));
 
             var actionsDic = tasks
                 .Where(t => t.ActionId.HasValue)
@@ -229,7 +246,7 @@ namespace TaskManager.Web.Api.Controllers
             return new TaskStatisticsVo()
             {
                 ActionsCount = actionsCount,
-                AverageWaitingTime = new EvaluatedTimeVo(TimeSpan.FromMilliseconds(allWaitingTimes.Select(ts => ts.Value.TotalMilliseconds).Average())),
+                AverageWaitingTime = allWaitingTimes.Any() ? new EvaluatedTimeVo(TimeSpan.FromMilliseconds(allWaitingTimes.Select(ts => ts.Value.TotalMilliseconds).Average())) : null,
                 CompletedBeforeDeadlineCount = tasks.Where(t => t.CompletedOn.HasValue && t.Deadline.HasValue && t.CompletedOn <= t.Deadline).Count(),
                 PercentageCompletedTasksCurrentMonth = percentageCompletedTasksCurrentMonth,
                 PercentageCompletedTasksToday = percentageCompletedTasksToday,

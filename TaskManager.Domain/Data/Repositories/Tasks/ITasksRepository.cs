@@ -10,6 +10,8 @@ namespace TaskManager.Domain.Data.Repositories.Tasks
     {
         IEnumerable<TaskVo> GetTasks(int userId);
 
+        IEnumerable<RecurringTaskGroupTaskVo> GetRecurringTaskGroups(int userId);
+
         IEnumerable<TaskMetricsVo> GetTaskMetrics(int userId);
 
         DateTime? GetFirstOverloadedDay(int userId);

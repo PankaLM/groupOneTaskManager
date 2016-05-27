@@ -10,7 +10,6 @@ namespace TaskManager.Domain.Aggregates
         public void AddConfiguration(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new AchievementMap());
-            modelBuilder.Configurations.Add(new RecurringTaskGroupMap());
             modelBuilder.Configurations.Add(new TaskMap());
             modelBuilder.Configurations.Add(new UserAchievementMap());
             modelBuilder.Configurations.Add(new UserMap());

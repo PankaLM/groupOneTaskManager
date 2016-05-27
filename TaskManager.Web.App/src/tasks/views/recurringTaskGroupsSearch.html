@@ -1,0 +1,44 @@
+<ng-form name="editTaskForm">
+  <div class="panel">
+    <div class="well-sm panel-body">
+      <h1>Recurring task groups</h1>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="pull-right" style="margin-top:20px">
+            <a type="button" ng-click="createNew()" class="btn btn-primary btn-sm glyphicon glyphicon-plus"></a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12" style="margin-top: 20px;">
+          <table st-table="groups" class="table table-striped">
+            <thead>
+              <tr>
+                <th colspan="6"><input st-search="" class="form-control" placeholder="search ..." type="text" /></th>
+              </tr>
+              <tr>
+                <th width="1px" ng-if="groups.length !== 0"></th>
+                <th width="1px" ng-if="groups.length !== 0"></th>
+                <th st-sort="title">Title</th>
+                <th st-sort="interval">Interval in days</th>
+                <th st-sort="duration">Duration in hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat-end ng-repeat="group in groups">
+                <td ng-if="groups.length !== 0"><a type="button" ng-click="edit(group.taskId)" class="glyphicon glyphicon-pencil"></a></td>
+                <td ng-if="groups.length !== 0"><a type="button" ng-click="remove(group.taskId)" class="glyphicon glyphicon-remove"></a></td>
+                <td>{{group.title}}</td>
+                <td>{{group.interval}}</td>
+                <td>{{group.duration}}</td>
+              </tr>
+              <tr ng-if="groups.length === 0">
+                <td colspan="4"> You have no recurring task groups </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-form>

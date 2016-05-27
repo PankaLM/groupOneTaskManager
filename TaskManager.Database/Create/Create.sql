@@ -32,7 +32,6 @@ GO
 :r $(rootPath)"\Tables\Users\Achievements.sql"
 :r $(rootPath)"\Tables\Users\UserAchievements.sql"
 
-:r $(rootPath)"\Tables\Tasks\RecurringTaskGroups.sql"
 :r $(rootPath)"\Tables\Tasks\Tasks.sql"
 
 

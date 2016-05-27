@@ -4,7 +4,6 @@ using System.Data.Entity.ModelConfiguration;
 using TaskManager.Common;
 using TaskManager.Common.UserContextModels;
 using TaskManager.Domain.Aggregates.Users;
-using TaskManager.Domain.Data.Common;
 
 namespace TaskManager.Domain.Aggregates.Tasks
 {
@@ -28,11 +27,14 @@ namespace TaskManager.Domain.Aggregates.Tasks
             DateTime? deadlineDate,
             string deadlineTime,
             int? duration,
-            int stateId,
+            int? stateId,
             int? actionId,
             int? dependantTaskId,
             State dependantTaskState,
-            bool createAppointment)
+            bool createAppointment,
+            bool isRecurringGroup,
+            int? recurringGroupIntervalInDays,
+            DateTime? recurringGroupStartDate)
         {
             this.UserId = user.UserId;
             this.InternalImportance = internalImportance;
@@ -43,22 +45,67 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Title = title;
             this.Description = description;
             this.Thumbnail = thumbnail;
-
-            this.ModifyDeadline(deadlineDate: deadlineDate, deadlineTime: deadlineTime);
             this.Duration = duration;
-
-            this.CreateAppointment = createAppointment;
-
-            this.ActionId = actionId;
-            
-            this.ModifyState(stateId);
             this.ModifyTag(tag);
             this.ModifyFlyScore();
-            this.ModifyDependantTask(dependantTaskId, dependantTaskState);
+
+            this.IsRecurringGroup = isRecurringGroup;
+            if (isRecurringGroup)
+            {
+                this.SetRecurringGroupData(recurringGroupIntervalInDays.Value, recurringGroupStartDate.Value, deadlineTime);
+            }
+            else
+            {
+                this.ModifyDeadline(deadlineDate: deadlineDate, deadlineTime: deadlineTime);
+                this.CreateAppointment = createAppointment;
+                this.ActionId = actionId;
+                this.ModifyState(stateId.Value);
+                this.ModifyDependantTask(dependantTaskId, dependantTaskState);
+            }
+
             this.ModifyDate = DateTime.Now;
             this.CreateDate = DateTime.Now;
-            this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true ;
+            this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true;
+        }
 
+        public TaskModel(
+            int userId,
+            int groupId,
+            bool internalImportance,
+            bool еxternalImportance,
+            bool clearness,
+            bool closeness,
+            bool simplicity,
+            string title,
+            string description,
+            string tag,
+            DateTime? deadlineDate,
+            string deadlineTime,
+            int? duration,
+            bool createAppointment)
+        {
+            this.UserId = userId;
+            this.InternalImportance = internalImportance;
+            this.ExternalImportance = еxternalImportance;
+            this.Clearness = clearness;
+            this.Closeness = closeness;
+            this.Simplicity = simplicity;
+            this.Title = title;
+            this.Description = description;
+            this.GroupId = groupId;
+            this.Duration = duration;
+            this.ModifyTag(tag);
+            this.ModifyFlyScore();
+
+            this.IsRecurringGroup = false;
+            this.ModifyDeadline(deadlineDate: deadlineDate, deadlineTime: deadlineTime);
+            this.CreateAppointment = createAppointment;
+            this.StateId = State.Initialized.StateId;
+            this.ModifyState(State.Initialized.StateId);
+
+            this.ModifyDate = DateTime.Now;
+            this.CreateDate = DateTime.Now;
+            this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true;
         }
 
         private void ModifyDeadline(
@@ -89,11 +136,14 @@ namespace TaskManager.Domain.Aggregates.Tasks
             DateTime? deadlineDate,
             string deadlineTime,
             int? duration,
-            int stateId,
+            int? stateId,
             int? actionId,
             int? dependantTaskId,
             State dependantTaskState,
-            bool createAppointment)
+            bool createAppointment,
+            bool isRecurringGroup,
+            int? recurringGroupIntervalInDays,
+            DateTime? recurringGroupStartDate)
         {
             this.InternalImportance = internalImportance;
             this.ExternalImportance = еxternalImportance;
@@ -103,19 +153,25 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Title = title;
             this.Description = description;
             this.Thumbnail = thumbnail;
-            this.ModifyDeadline(deadlineDate: deadlineDate, deadlineTime: deadlineTime);
             this.Duration = duration;
-            this.ActionId = actionId;
-
-            this.CreateAppointment = createAppointment;
-
             this.ModifyTag(tag);
             this.ModifyFlyScore();
-            this.ModifyState(stateId);
-            this.ModifyDependantTask(dependantTaskId, dependantTaskState);
+
+            this.IsRecurringGroup = isRecurringGroup;
+            if (isRecurringGroup)
+            {
+                this.SetRecurringGroupData(recurringGroupIntervalInDays.Value, recurringGroupStartDate.Value, deadlineTime);
+            }
+            else
+            {
+                this.ModifyDeadline(deadlineDate: deadlineDate, deadlineTime: deadlineTime);
+                this.CreateAppointment = createAppointment;
+                this.ActionId = actionId;
+                this.ModifyState(stateId.Value);
+                this.ModifyDependantTask(dependantTaskId, dependantTaskState);
+            }
 
             this.ModifyDate = DateTime.Now;
-            this.Notified = this.Deadline.HasValue ? (this.ModifyDate - this.Deadline).Value.Days > 0 : true;
         }
 
         public int TaskId { get; private set; }
@@ -191,18 +247,18 @@ namespace TaskManager.Domain.Aggregates.Tasks
         {
             get
             {
-                return this.Deadline.HasValue ? new DateTime((TimeSpan.FromTicks(this.Deadline.Value.Ticks) - TimeSpan.FromHours(this.Duration ?? 0)).Ticks) : (DateTime?)null;
+                return this.Deadline.HasValue && !this.IsRecurringGroup ? new DateTime((TimeSpan.FromTicks(this.Deadline.Value.Ticks) - TimeSpan.FromHours(this.Duration ?? 0)).Ticks) : (DateTime?)null;
             }
         }
         public int? Duration { get; private set; }
 
-        public int StateId { get; private set; }
+        public int? StateId { get; private set; }
 
         public State State
         {
             get
             {
-                return State.GetById(this.StateId);
+                return this.StateId.HasValue? State.GetById(this.StateId.Value) : null;
             }
         }
 
@@ -232,7 +288,29 @@ namespace TaskManager.Domain.Aggregates.Tasks
 
         public bool Notified { get; private set; }
 
-        public RecurringTaskGroup RecurringTaskGroup { get; private set; }
+        public bool IsRecurringGroup { get; private set; }
+
+        public int? RecurringGroupInterval { get; private set; }
+
+        public DateTime? RecurringGroupStartDate { get; private set; }
+
+
+        private void SetRecurringGroupData(
+            int intervalInDays,
+            DateTime recurringGroupStartDate,
+            string deadlineTime)
+        {
+            this.RecurringGroupInterval = intervalInDays;
+            this.RecurringGroupStartDate = recurringGroupStartDate;
+
+            if (!string.IsNullOrEmpty(deadlineTime))
+            {
+                var timeParts = deadlineTime.Split(':');
+                this.Deadline = DateTime.MinValue.Date
+                    .AddHours(int.Parse(timeParts[0].Trim()))
+                    .AddMinutes(int.Parse(timeParts[1].Trim()));
+            }
+        }
 
         public User User { get; private set; }
 
@@ -343,15 +421,15 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Property(t => t.Notified).HasColumnName("Notified");
             this.Property(t => t.AppointmentSent).HasColumnName("AppointmentSent");
             this.Property(t => t.CreateAppointment).HasColumnName("CreateAppointment");
+            this.Property(t => t.IsRecurringGroup).HasColumnName("IsRecurringGroup");
+            this.Property(t => t.RecurringGroupInterval).HasColumnName("RecurringGroupInterval");
+            this.Property(t => t.RecurringGroupStartDate).HasColumnName("RecurringGroupStartDate");
             this.Property(t => t.StartedOn).HasColumnName("StartedOn");
             this.Property(t => t.CompletedOn).HasColumnName("CompletedOn");
             this.Property(t => t.ModifyDate).HasColumnName("ModifyDate");
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
             // Relationships
-            this.HasOptional(t => t.RecurringTaskGroup)
-                .WithMany()
-                .HasForeignKey(d => d.GroupId);
             this.HasRequired(t => t.User)
                 .WithMany(t => t.Tasks)
                 .HasForeignKey(d => d.UserId);

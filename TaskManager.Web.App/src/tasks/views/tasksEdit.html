@@ -4,18 +4,18 @@
       <div class="pull-right">
         <button type="button" ng-click="editMode = true" class="btn btn-primary btn-xs glyphicon glyphicon-pencil" ng-show="!editMode"></button>
         <button type="button" ng-click="remove()" class="btn btn-danger btn-xs glyphicon glyphicon-remove"></button>
-        <button type="button" ng-click="save()" class="btn btn-primary btn-xs glyphicon glyphicon-floppy-disk" ng-show="editMode"></button>
+        <button type="button" ng-click="save()" class="btn btn-primary btn-xs glyphicon glyphicon-floppy-disk" ng-show="editMode" ng-disabled="editTaskForm.$invalid"></button>
         <button type="button" ng-click="back()" class="btn btn-primary btn-xs glyphicon glyphicon-menu-left"></button>
       </div>
     </div>
 
     <div class="well-sm panel-body">
-      <div class="row">
+      <div class="row" ng-if="!task.isRecurringGroup">
         <div class="col-xs-12" style="margin-top:10px">
           <uib-progressbar class="progress active" value="motionLevel" type="{{scaleStyle}}"></uib-progressbar>
         </div>
       </div>
-      <task ng-model="task" name="taskFom" readonly="!editMode"></task>
+      <task ng-model="task" readonly="!editMode"></task>
     </div>
   </div>
 </ng-form>

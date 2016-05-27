@@ -38,9 +38,7 @@ namespace TaskManager.Web.Api.Tasks.DataObjects
 
         public int? Duration { get; set; }
 
-        public DateTime? PostponeDeadline { get; set; }
-
-        public int StateId { get; set; }
+        public int? StateId { get; set; }
 
         public int? ActionId { get; set; }
 
@@ -50,5 +48,10 @@ namespace TaskManager.Web.Api.Tasks.DataObjects
 
         public string LateStart { get; set; }
 
+        public bool IsRecurringGroup { get; set; }
+
+        public int? RecurringGroupIntervalInDays { get; set; }
+
+        public DateTime? RecurringGroupStartDate { get; set; }
     }
 }

@@ -13,3 +13,8 @@
 .red {
   background: #ff6261;
 }
+br {
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px dashed red;
+}

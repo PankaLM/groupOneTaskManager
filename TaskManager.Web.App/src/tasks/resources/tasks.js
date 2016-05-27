@@ -8,6 +8,11 @@
         method: 'GET',
         url: 'api/tasks/new'
       },
+      getRecurringTaskGroups: {
+        method: 'GET',
+        url: 'api/tasks/recurringTaskGroups',
+        isArray: true
+      },
       getMetrics: {
         method: 'GET',
         url: 'api/tasks/metrics',
@@ -20,7 +25,7 @@
       getStatistics: {
         method: 'GET',
         url: 'api/tasks/statistics'
-      },
+      }
     });
   }]);
 }(angular));

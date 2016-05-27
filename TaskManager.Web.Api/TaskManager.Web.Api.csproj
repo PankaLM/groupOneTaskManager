@@ -103,6 +103,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Jobs\RecurringTasksCreator.cs" />
     <Compile Include="Jobs\EmailSender.cs" />
     <Compile Include="OAuth\ApplicationOAuthBearerProvider.cs" />
     <Compile Include="OAuth\ApplicationOAuthServerProvider.cs" />

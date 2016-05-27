@@ -23,6 +23,7 @@ namespace TaskManager.Web.Api
             moduleBuilder.RegisterType<UsersController>().InstancePerLifetimeScope();
 
             moduleBuilder.RegisterType<EmailSender>().As<IJob>().ExternallyOwned();
+            moduleBuilder.RegisterType<RecurringTasksCreator>().As<IJob>().ExternallyOwned();
         }
     }
 }

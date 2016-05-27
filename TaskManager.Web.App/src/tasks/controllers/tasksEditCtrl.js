@@ -48,15 +48,18 @@
       $scope.scaleStyle = type;
     }
 
+    $scope.$watch('task.isRecurringGroup', function () {
+      $scope.transitionToState = $scope.task.isRecurringGroup ? 'recurringTaskGroups' : 'tasks';
+    });
     $scope.back = function () {
-      return $state.go('tasks', {});
+      return $state.go($scope.transitionToState);
     };
 
     $scope.save = function () {
       Tasks.save({ id: $stateParams.id }, $scope.task)
         .$promise
         .then(function (result) {
-          return $state.transitionTo('tasks');
+          return $state.transitionTo($scope.transitionToState);
         });
     };
 
@@ -64,7 +67,7 @@
       Tasks.remove({ id: $stateParams.id })
         .$promise
         .then(function () {
-          return $state.go('tasks');
+          return $state.go($scope.transitionToState);
         });
     };
 

@@ -68,6 +68,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -89,7 +90,6 @@
     <Compile Include="Aggregates\DomainDbConfiguration.cs" />
     <Compile Include="Aggregates\Tasks\State.cs" />
     <Compile Include="Aggregates\Tasks\Action.cs" />
-    <Compile Include="Aggregates\Tasks\RecurringTaskGroup.cs" />
     <Compile Include="Aggregates\Tasks\TaskModel.cs" />
     <Compile Include="Aggregates\Users\Achievement.cs" />
     <Compile Include="Aggregates\Users\User.cs" />
@@ -105,6 +105,7 @@
     <Compile Include="Data\ViewObjects\TasksStatisticsVo.cs" />
     <Compile Include="Data\ViewObjects\TaskValueVo.cs" />
     <Compile Include="Data\ViewObjects\TaskMetricsVo.cs" />
+    <Compile Include="Data\ViewObjects\RecurringTaskGroupTaskVo.cs" />
     <Compile Include="Data\ViewObjects\ValueVo.cs" />
     <Compile Include="Data\ViewObjects\TaskVo.cs" />
     <Compile Include="DomainModule.cs" />

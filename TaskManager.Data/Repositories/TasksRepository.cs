@@ -21,7 +21,6 @@ namespace TaskManager.Data.Repositories
         public override TaskModel Find(int id)
         {
             return this.dbContextAccessor.DbContext.Set<TaskModel>()
-                .Include(t => t.RecurringTaskGroup)
                 .Where(t => t.TaskId == id)
                 .SingleOrDefault();
         }
@@ -44,10 +43,26 @@ namespace TaskManager.Data.Repositories
                  });
         }
 
+        public IEnumerable<RecurringTaskGroupTaskVo> GetRecurringTaskGroups(int userId)
+        {
+            return this.dbContextAccessor.DbContext.Set<TaskModel>()
+                .Where(t => t.UserId == userId && t.IsRecurringGroup)
+                .AsEnumerable()
+                .Select(t => new RecurringTaskGroupTaskVo()
+                {
+                    TaskId = t.TaskId,
+                    Title = t.Title,
+                    Duration = t.Duration,
+                    Interval = t.RecurringGroupInterval.Value
+                });
+        }
+
         public IEnumerable<TaskMetricsVo> GetTaskMetrics(int userId)
         {
             return this.dbContextAccessor.DbContext.Set<TaskModel>()
-                .Where(t => t.UserId == userId)
+                .Where(u => u.UserId == userId &&
+                    !u.IsRecurringGroup &&
+                    (!u.GroupId.HasValue || DbFunctions.DiffDays(u.Deadline, DateTime.Now) >= 0))
                 .OrderByDescending(t => t.FlyScore)
                 .AsEnumerable()
                 .Select(t =>new TaskMetricsVo()

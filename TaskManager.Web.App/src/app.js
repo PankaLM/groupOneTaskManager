@@ -39,6 +39,18 @@
                 }]
             }
           })
+          .state('recurringTaskGroups', {
+            url: '/groups',
+            controller: 'RecurringTaskGroupsSearchCtrl',
+            templateUrl: 'tasks/views/recurringTaskGroupsSearch.html',
+            resolve: {
+              groups: [
+                'Tasks',
+                function (Tasks) {
+                  return Tasks.getRecurringTaskGroups().$promise;
+                }]
+            }
+          })
           .state('metrics', {
             url: '/metrics',
             controller: 'TasksMetricsCtrl',
@@ -87,7 +99,8 @@
             resolve: {
               newTask: [
                 'Tasks',
-                function (Tasks) {
+                '$stateParams',
+                function (Tasks, $stateParams) {
                   return Tasks.getNew().$promise;
                 }]
             }

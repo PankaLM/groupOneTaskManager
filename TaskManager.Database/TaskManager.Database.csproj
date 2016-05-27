@@ -58,7 +58,6 @@
       <LastGenOutput>CreateDb.log</LastGenOutput>
     </Content>
     <Content Include="Create\Create.sql" />
-    <Content Include="Create\Tables\Tasks\RecurringTaskGroups.sql" />
     <Content Include="Create\Tables\Tasks\Tasks.sql" />
     <Content Include="Create\Tables\Users\Achievements.sql" />
     <Content Include="Create\Tables\Users\UserAchievements.sql" />
