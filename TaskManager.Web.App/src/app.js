@@ -136,18 +136,18 @@
         $scope.logout = function () {
           authenticationService.signOut();
         };
-        $scope.toggleAlert = function () {
-          $scope.showAlert = !$scope.showAlert;
+        $scope.removeAlert = function () {
+          $scope.showAlert = false;
         };
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
           $scope.isLoggedIn = authenticationService.isLoggedIn();
-          if ($scope.isLoggedIn) {
+          if ($scope.isLoggedIn && toState && toState.name === 'tasks') {
               Tasks.checkForOverloading().$promise.then(function (res) {
                 if (res.hasOverloadedDay) {
-                  $scope.alertForOverloading = true;
+                  $scope.showAlert = true;
                   $scope.overloadedDate = res.overloadedDay;
                 } else {
-                  $scope.alertForOverloading = false;
+                  $scope.showAlert = false;
                 }
               });
           }

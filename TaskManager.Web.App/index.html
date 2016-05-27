@@ -33,14 +33,13 @@
                     <li ng-if="isLoggedIn"><a ui-sref="statistics" class="glyphicon glyphicon-equalizer"></a></li>
                     <li ng-if="isLoggedIn"><a ui-sref="inviteFriend" class="glyphicon glyphicon-heart-empty"></a></li>
                     <li ng-if="isLoggedIn"><a ng-click="logout()" class="glyphicon glyphicon-log-out"></a></li>
-                    <li ng-if="alertForOverloading"><a ng-click="toggleAlert()" class="btn btn-sm pull-left">Pssst!</a></li>
                   </ul>
                 </div>
             </div>
         </nav>
         <div class="alert alert-warning alert-dismissible fade in" role="alert" ng-if="showAlert"
              style="margin-top:40px">
-          <button type="button" class="close" ng-click="toggleAlert()">
+          <button type="button" class="close" ng-click="removeAlert()">
             <span aria-hidden="true">×</span>
           </button> <strong>Wow!</strong>
           Hey on {{overloadedDate | date: 'mediumDate'}} you're going to be really busy, you have too many tasks expiring this day!
