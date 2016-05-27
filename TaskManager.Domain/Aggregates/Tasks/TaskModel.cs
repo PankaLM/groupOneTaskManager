@@ -8,7 +8,7 @@ using TaskManager.Domain.Data.Common;
 
 namespace TaskManager.Domain.Aggregates.Tasks
 {
-    public class TaskModel : IAggregateRoot
+    public class TaskModel
     {
         private TaskModel()
         {
@@ -196,8 +196,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
         }
         public int? Duration { get; private set; }
 
-        public DateTime? PostponeDeadline { get; private set; }
-
         public int StateId { get; private set; }
 
         public State State
@@ -237,11 +235,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
         public RecurringTaskGroup RecurringTaskGroup { get; private set; }
 
         public User User { get; private set; }
-
-        public void Postpone(DateTime newDeadline)
-        {
-            this.PostponeDeadline = newDeadline;
-        }
 
         private void ModifyTag(string tag)
         {
@@ -344,7 +337,6 @@ namespace TaskManager.Domain.Aggregates.Tasks
             this.Property(t => t.Thumbnail).HasColumnName("Thumbnail");
             this.Property(t => t.Deadline).HasColumnName("Deadline");
             this.Property(t => t.Duration).HasColumnName("Duration");
-            this.Property(t => t.PostponeDeadline).HasColumnName("PostponeDeadline");
             this.Property(t => t.StateId).HasColumnName("StateId");
             this.Property(t => t.ActionId).HasColumnName("ActionId");
             this.Property(t => t.DependantTaskId).HasColumnName("DependantTaskId");

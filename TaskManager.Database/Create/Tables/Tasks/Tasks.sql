@@ -20,7 +20,6 @@ CREATE TABLE [dbo].[Tasks] (
     Thumbnail             NVARCHAR(MAX)   NULL,
     Deadline              DATETIME2       NULL,
     Duration              INT             NULL,
-    PostponeDeadline      DATETIME2       NULL,
     StateId               INT             NOT NULL,
     ActionId              INT             NULL,
     DependantTaskId       INT             NULL,

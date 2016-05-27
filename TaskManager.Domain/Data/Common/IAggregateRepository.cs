@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TaskManager.Domain.Data.Common
 {
     public interface IAggregateRepository<TEntity>
-     where TEntity : class, IAggregateRoot
+     where TEntity : class
     {
         TEntity Find(int id);
 

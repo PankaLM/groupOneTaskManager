@@ -162,23 +162,7 @@ namespace TaskManager.Web.Api.Controllers
 
             this.unitOfWork.Save();
         }
-
-        [Route("{id:int}/postpone")]
-        [HttpPost]
-        [Transaction]
-        public void PostponeTask(int id, DateTime newDeadline)
-        {
-            var task = this.tasksRepository.Find(id);
-            if (task.UserId != this.userContext.UserId)
-            {
-                throw new Exception("You do not have permissions on this task");
-            }
-
-            task.Postpone(newDeadline);
-
-            this.unitOfWork.Save();
-        }
-
+        
         [Route("{id:int}")]
         [HttpDelete]
         [Transaction]

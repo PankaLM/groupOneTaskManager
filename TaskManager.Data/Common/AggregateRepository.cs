@@ -8,7 +8,7 @@ using TaskManager.Domain.Data.Common;
 namespace TaskManager.Data.Common
 {
     internal abstract class AggregateRepository<TEntity> : IAggregateRepository<TEntity>
-    where TEntity : class, IAggregateRoot
+    where TEntity : class
     {
         protected IDbContextAccessor dbContextAccessor;
 

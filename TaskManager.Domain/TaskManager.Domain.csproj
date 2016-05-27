@@ -95,7 +95,6 @@
     <Compile Include="Aggregates\Users\User.cs" />
     <Compile Include="Aggregates\Users\UserAchievement.cs" />
     <Compile Include="Data\Common\IAggregateRepository.cs" />
-    <Compile Include="Data\Common\IAggregateRoot.cs" />
     <Compile Include="Data\Common\IDbConfiguration.cs" />
     <Compile Include="Data\Common\IDbContextAccessor.cs" />
     <Compile Include="Data\Common\IUnitOfWork.cs" />
