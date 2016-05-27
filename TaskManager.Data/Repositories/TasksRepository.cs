@@ -39,7 +39,7 @@ namespace TaskManager.Data.Repositories
                      Duration = t.Duration,
                      Title = t.Title,
                      FlyScore = t.FlyScore,
-                     TooLate = t.Deadline.HasValue ? (t.Deadline < DateTime.Now.AddHours((double)(t.Duration ?? 0))) : false,
+                     TooLate = t.LateStart.HasValue ? DateTime.Compare(t.LateStart.Value, DateTime.Now) <= 0 : false,
                      Tags = !string.IsNullOrEmpty(t.Tag) ? string.Join(", ", t.Tag.Split(TaskManagerConstants.Splitter.ToCharArray())) : ""
                  });
         }

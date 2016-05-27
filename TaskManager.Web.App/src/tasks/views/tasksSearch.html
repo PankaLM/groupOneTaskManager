@@ -29,12 +29,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat-end ng-repeat="task in tasks" ng-class="{'red' : task.tooLate}">
+              <tr ng-repeat-end ng-repeat="task in tasks">
                 <td ng-if="tasks.length !== 0"><a type="button" ng-click="edit(task.taskId)" class="glyphicon glyphicon-pencil"></a></td>
                 <td ng-if="tasks.length !== 0"><a type="button" ng-click="remove(task.taskId)" class="glyphicon glyphicon-remove"></a></td>
                 <td>{{task.title}}</td>
                 <td>{{task.flyScore}}</td>
-                <td>{{task.deadline | date : 'dd.MM.yy'}}</td>
+                <td ng-class="{'red' : task.tooLate}">{{task.deadline | date : 'dd.MM.yy'}}</td>
                 <td>{{task.duration}}</td>
               </tr>
               <tr ng-if="tasks.length === 0">

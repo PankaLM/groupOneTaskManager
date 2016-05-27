@@ -187,6 +187,13 @@ namespace TaskManager.Domain.Aggregates.Tasks
             }
         }
 
+        public DateTime? LateStart
+        {
+            get
+            {
+                return this.Deadline.HasValue ? new DateTime((TimeSpan.FromTicks(this.Deadline.Value.Ticks) - TimeSpan.FromHours(this.Duration ?? 0)).Ticks) : (DateTime?)null;
+            }
+        }
         public int? Duration { get; private set; }
 
         public DateTime? PostponeDeadline { get; private set; }
