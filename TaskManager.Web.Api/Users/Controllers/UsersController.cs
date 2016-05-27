@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http.Formatting;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Mail;
 using System.Web.Http;
 using TaskManager.Common.UserContextModels;
 using TaskManager.Domain.Aggregates.Users;
 using TaskManager.Domain.Data.Common;
 using TaskManager.Web.Api.Users.DataObjects;
-using System.Net.Http.Formatting;
-using System.Web.Http;
-using System.Net.Mail;
-using TaskManager.Web.Api.Jobs;
-using System.Net;
 
 namespace TaskManager.Web.Api.Users
 {

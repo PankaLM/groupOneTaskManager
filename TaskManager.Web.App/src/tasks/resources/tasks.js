@@ -25,6 +25,14 @@
       getStatistics: {
         method: 'GET',
         url: 'api/tasks/statistics'
+      },
+      saveFlyCutoff: {
+        method: 'POST',
+        url: 'api/tasks/flyCutoff'
+      },
+      getFlyCutoff: {
+        method: 'GET',
+        url: 'api/tasks/flyCutoff'
       }
     });
   }]);

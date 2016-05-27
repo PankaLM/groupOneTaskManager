@@ -12,6 +12,7 @@ using TaskManager.Web.Api.Tasks.DataObjects;
 using TaskManager.Web.Api.Utils;
 using System.Linq;
 using System.Data.Entity;
+using TaskManager.Domain.Aggregates.Users;
 
 namespace TaskManager.Web.Api.Controllers
 {
@@ -254,5 +255,31 @@ namespace TaskManager.Web.Api.Controllers
             };
         }
 
+        [Route("flyCutoff")]
+        [HttpPost]
+        public IHttpActionResult ChangeFlyCutoff(string flyCutoff)
+        {
+            User user = dbContextAccessor.DbContext.Set<User>()
+                .SingleOrDefault(e => e.UserId == userContext.UserId);
+            user.SetFlyCutoff(int.Parse(flyCutoff));
+
+            this.unitOfWork.Save();
+
+            return Ok();
+        }
+
+        [Route("flyCutoff")]
+        [HttpGet]
+        public object GetFlyCutoff()
+        {
+            User user = dbContextAccessor.DbContext.Set<User>()
+                .SingleOrDefault(e => e.UserId == userContext.UserId);
+
+            return
+                new
+                {
+                    flyCutoff = user.FlyCutoff
+                };
+        }
     }
 }

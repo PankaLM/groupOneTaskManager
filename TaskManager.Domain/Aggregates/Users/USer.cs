@@ -27,6 +27,7 @@ namespace TaskManager.Domain.Aggregates.Users
             this.Email = email;
             this.SetPassword(password);
             this.IsActive = true;
+            this.FlyCutoff = 15;
         }
 
         public void Modify(
@@ -37,7 +38,14 @@ namespace TaskManager.Domain.Aggregates.Users
             this.Email = email;
         }
 
+        public void SetFlyCutoff(int value)
+        {
+            this.FlyCutoff = value;
+        }
+
         public int UserId { get; private set; }
+
+        public int FlyCutoff { get; private set; }
 
         public string Username { get; private set; }
 
@@ -115,7 +123,7 @@ namespace TaskManager.Domain.Aggregates.Users
             this.Property(t => t.Fullname).HasColumnName("Fullname");
             this.Property(t => t.Email).HasColumnName("Email");
             this.Property(t => t.IsActive).HasColumnName("IsActive");
-
+            this.Property(t => t.FlyCutoff).HasColumnName("FlyCutoff");
             this.Ignore(u => u.Password);
         }
     }

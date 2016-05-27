@@ -36,6 +36,14 @@
                 'Tasks',
                 function (Tasks) {
                   return Tasks.query().$promise;
+                }],
+              flyCutoff: [
+                'Tasks',
+                function (Tasks) {
+                  return Tasks.getFlyCutoff().$promise
+                    .then(function (res) {
+                      return res.flyCutoff;
+                    });
                 }]
             }
           })
@@ -130,7 +138,17 @@
           .state('settings', {
             url: '/settings',
             controller: 'SettingsEditCtrl',
-            templateUrl: 'settings/views/settingsEdit.html'
+            templateUrl: 'settings/views/settingsEdit.html',
+            resolve: {
+              flyCutoff: [
+                'Tasks',
+                function (Tasks) {
+                  return Tasks.getFlyCutoff().$promise
+                    .then(function (res) {
+                      return res.flyCutoff;
+                    });
+                }]
+            }
           });
     }])
     .run(['$rootScope', '$state',

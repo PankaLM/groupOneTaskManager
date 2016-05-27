@@ -3,27 +3,33 @@
 
   function SettingsEditCtrl(
       $scope,
-      $state
+      $state,
+      Tasks,
+      flyCutoff
     ) {
     $scope.editMode = false;
 
-    //TODO: Get the settings from the server
-    $scope.settings = {};
+    $scope.model = { flyCutoff: flyCutoff };
 
     $scope.save = function () {
-      //TODO: Actually save the settings
+      Tasks.saveFlyCutoff({ flyCutoff: $scope.model.flyCutoff }, {})
+        .$promise
+        .then(function (result) {
+          return $state.transitionTo('tasks');
+        });
       $scope.editMode = false;
     };
 
     $scope.back = function () {
-      console.log('dafuq man?');
-      return $state.go('tasks', {});
+      return $state.go('tasks');
     };
   }
 
   SettingsEditCtrl.$inject = [
       '$scope',
-      '$state'
+      '$state',
+      'Tasks',
+      'flyCutoff'
     ];
   angular.module('taskManager').controller('SettingsEditCtrl', SettingsEditCtrl);
 }(angular));

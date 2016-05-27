@@ -62,7 +62,6 @@
     <Content Include="Create\Tables\Users\Achievements.sql" />
     <Content Include="Create\Tables\Users\UserAchievements.sql" />
     <Content Include="Create\Tables\Users\Users.sql" />
-    <Content Include="Insert\Users\Users.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

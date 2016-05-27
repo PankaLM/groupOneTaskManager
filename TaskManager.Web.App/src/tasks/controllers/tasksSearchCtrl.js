@@ -5,11 +5,12 @@
       $scope,
       $state,
       Tasks,
-      tasks
+      tasks,
+      flyCutoff
     ) {
     $scope.originalTasks = tasks;
     $scope.tasks = tasks;
-    $scope.flyLimit = null;
+    $scope.flyLimit = flyCutoff;
 
     $scope.createNew = function () {
       return $state.transitionTo('tasksNew', {});
@@ -29,7 +30,7 @@
         });
     };
 
-    $scope.limitTasks = function () {
+    $scope.$watch('flyLimit', function () {
       if ($scope.flyLimit) {
         $scope.tasks = _.filter($scope.originalTasks, function (task) {
           return task.flyScore >= $scope.flyLimit;
@@ -37,14 +38,15 @@
       } else {
         $scope.tasks = $scope.originalTasks;
       }
-    };
+    });
   }
 
   TasksSearchCtrl.$inject = [
       '$scope',
       '$state',
       'Tasks',
-      'tasks'
+      'tasks',
+      'flyCutoff'
   ];
   angular.module('taskManager')
     .controller('TasksSearchCtrl', TasksSearchCtrl);
