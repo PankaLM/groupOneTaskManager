@@ -14,8 +14,8 @@ namespace TaskManager.Domain.Data.ViewObjects
             if (time.HasValue)
             {
                 this.Days = time.Value.Days;
-                this.Minutes = time.Value.Minutes - time.Value.Days * 24 * 60;
-                this.Hours = time.Value.Hours - time.Value.Days * 24;
+                this.Minutes = time.Value.Minutes;
+                this.Hours = time.Value.Hours;
                 this.Time = time;
             }
         }
