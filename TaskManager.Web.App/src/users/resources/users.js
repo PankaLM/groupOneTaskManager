@@ -20,10 +20,10 @@
         isCorrectPassword: {
           method: 'POST',
           url: 'api/user/isCorrectPassword',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          },
           transformRequest: function (data, headers) {
-            _.extend(headers(), {
-              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            });
             return encodeURIComponent('password') + '=' + encodeURIComponent(data);
           }
         },
